@@ -1,0 +1,38 @@
+﻿@inject ICategory_Service Category_Service
+@inject IProducts_Service Products_Service
+
+@page "/Shop"
+@page "/{CategoryURL}"
+
+@if (category_variable != null)
+{
+    <h3>Welcome to the @category_variable.Name category</h3>
+    <ListProducts/>
+}
+else
+{
+    <h3>Welcome to the Shop</h3>
+    <ListProducts />
+}
+
+
+@code
+{
+    private Category category_variable = null;
+
+    [Parameter]
+    public string CategoryURL { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await Products_Service.LoadProducts(CategoryURL);
+        if (CategoryURL != null)
+        {
+            category_variable = Category_Service.Categories.FirstOrDefault(c => c.Url.ToUpper().Equals(CategoryURL.ToUpper()));
+        }
+        else
+        {
+            category_variable = null;
+        }
+    }
+}

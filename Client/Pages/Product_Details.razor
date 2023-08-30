@@ -1,0 +1,103 @@
+﻿@page "/product/{Id:int}"
+@inject ICart_Service Cart_Service
+@inject IProducts_Service Product_Service
+@inject ILocalStorageService LocalStorage
+@inject IToastService ToastService
+@try
+{
+    @if (product != null)
+    {
+        <div class="media" style="display: flex; align-items: flex-start;">
+            <div class="media-img-details" style="border-right: 3px solid lightgray; padding-right: 20px;">
+                <img class="media-img-big" src="@product.Image" alt="@product.Title" />
+            </div>
+
+            <div class="media-body" style="margin-left:15px;">
+                <h2 class="mb-0">@product.Title</h2>
+                <p>@product.Description</p>
+                @if (product.Variants != null && product.Variants.Count > 1)
+                {
+                    <select @bind="CurrentAdditonId" style="padding:3px;padding-bottom:5px;inline-size:55px;text-align:center;border-width:2px; border-color:black;border-radius:4px;margin-bottom:3px;margin-right:5px;">
+                        @foreach (var _variants in product.Variants)
+                        {
+                            <option value="@_variants.AdditionId" style="text-align:left;">
+                                @_variants.Addition.Name
+                            </option>
+                        }
+                    </select>
+                }
+                @if (!string.IsNullOrEmpty(product.ColorOfPreview))
+                {
+                    <p>Item Size:</p>
+                    <select bind ="@SelectedColor"attributes style="padding: 3px; padding-bottom: 5px;border-width: 2px; border-color: black; border-radius: 4px; margin-bottom:3px;">
+                        @foreach (var coloroptions in Stack_Colors)
+                        {
+                            <option>
+                                @(char.ToUpper(coloroptions[0]) + coloroptions.Substring(1))
+                            </option>
+                        }
+                    </select>
+                }
+                @if (GetSelectedVariant() != null)
+                {
+                    @if (product.Variants[0].OriginalPrice != GetSelectedVariant().Price)
+                    {
+                        <div class="price">
+                            <p style="color:green;text-decoration:line-through;">Original price: £@product.Variants[0].OriginalPrice</p>
+                            <p>Total price: £@GetSelectedVariant().Price</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>Original price: £@product.Variants[0].OriginalPrice</p>
+                        <p>Total price: £@GetSelectedVariant().Price</p>
+                    }
+                }
+
+                <button class="btn btn-primary" style="margin-bottom:10px;" @onclick="AddToCart"><i class="fas fa-cart-plus"></i>&nbsp;&nbsp;&nbsp;Add to Cart</button>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h1> Product Not Found, Please enter a correct product Id</h1>
+    }
+}
+catch
+{
+    Console.WriteLine("Error occured");
+}
+
+
+@code {
+    private Product? product = new Product();
+
+    public string SelectedColor;
+
+    public int CurrentAdditonId = 1;
+
+    [Parameter]
+    public int? Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        product = await Product_Service.LoadSingleProduct(Id);
+        if (product.Variants.Count > 0)
+        {
+            CurrentAdditonId = product.Variants[0].AdditionId;
+        }
+    }
+
+    public Variants_Product GetSelectedVariant()
+    {
+        var variant = product.Variants.FirstOrDefault(v => v.AdditionId == CurrentAdditonId);
+        return variant;
+    }
+
+    public Stack<string> Stack_Colors = new Stack<string>(new[] { "yellow", "red", "blue", "green", "orange", "purple", "pink", "brown", "white", "black", "gray" });
+
+    private async Task AddToCart()
+    {
+        await Cart_Service.AddToCart(GetSelectedVariant());
+    }
+}

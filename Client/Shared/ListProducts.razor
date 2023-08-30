@@ -1,0 +1,88 @@
+﻿@inject IProducts_Service Product_Service
+@implements IDisposable
+
+<ul class="list-unsorted" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; margin: 0 -5px;">
+    @foreach (var product in Product_Service.Products)
+    {
+
+        <li class="media my-3 product-item" style="background-color: whitesmoke; color: black; width: calc(25% - 10px); margin: 0 5px; padding: 10px;">
+            <div class="media-img-wrapper mr-2" style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
+                <a href="/product/@product.Id">
+                    <img style="align-content:center; max-width: 100%;" class="media-img" src="@product.Image" alt="@product.Title" />
+                </a>
+            </div>
+            <hr class="divider2" style="height: 3px; background-color: black; color: black; margin: 0; width: calc(100% + 20px); margin-left: -10px; margin-top:10px;" />
+            <div class="media-body" style=" padding: 10px; color: black;">
+                <a href="/product/@product.Id" style="text-decoration:none;">
+                    <h2 class="product-title" style="font-size:@TitleSize(product)">@product.Title</h2>
+                </a>
+                <p>Product Description: @product.Description</p>
+                <p style="color:green;">@GetPriceTxt(product)</p>
+
+                @if (product.ColorOfPreview != null)
+                {
+                    <p>Color of item above : @product.ColorOfPreview</p>
+                }
+                @if (product.SizeOfPreview != null)
+                {
+                    <p>Size of item above : @product.SizeOfPreview</p>
+                }
+            </div>
+        </li>
+    }
+
+</ul>
+
+@code
+{
+    public string TitleSize (Product product)
+    {
+        if (product.Title.Length <= 20)
+        {
+            return "2rem";
+        }
+        else if (product.Title.Length >= 21 && product.Title.Length <= 30)
+        {
+            return "1.7rem";
+        }
+        else if (product.Title.Length >= 31 && product.Title.Length <= 40)
+        {
+            return "1.3rem";
+        }
+        else
+        {
+            return "0.8rem";
+        }
+        
+    }
+
+    protected override void OnInitialized()
+    {
+        Product_Service.OnChange += StateHasChanged;
+    }
+    public void Dispose()
+    {
+        Product_Service.OnChange -= StateHasChanged;
+    }
+    public string GetPriceTxt(Product product)
+    {
+        var variants = product.Variants;
+        if (variants.Count == 0)
+        {
+            return string.Empty;
+        }
+        else if (variants.Count == 1)
+        {
+            if (variants[0].OriginalPrice == null)
+            {
+                return $"Price : £{variants[0].Price}";
+
+            }
+            else
+            {
+                return $" Price : £{variants[0].OriginalPrice}";//first variant that the product has is variants[0]
+            }
+        }
+        return $"Starting at : £{variants[0].OriginalPrice}";
+    }
+}

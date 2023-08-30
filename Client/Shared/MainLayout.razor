@@ -1,0 +1,21 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <div style="max-width:225px;" class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+
+        <div class="top-row px-4">
+            <TopBar/>
+        </div>
+        <h2 style="z-index:2;position: absolute; top: 9px; left: 250px;font-family: 'Alegreya Sans SC', Tahoma, Geneva, Verdana, sans-serif; color: #333; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">Handball <span style="color: #E74C3C; padding-right:10px;">Shop</span><i class="fas fa-futbol" /></h2>
+
+
+        <article style="padding-right:1.3rem;padding-left:1.5rem;" class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+<BlazoredToasts />

@@ -1,0 +1,44 @@
+﻿@inject ICategory_Service Category_Service
+
+
+<div style="margin-bottom:10px;" class="top-row ps-3 navbar navbar-light fixed-navbar"></div>
+
+<div class="nav-item px-3 ">
+    <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+        <span class="oi oi-home" style="padding-right:40px;" aria-hidden="true"></span>Home
+    </NavLink>
+</div>
+<div class="nav-item px-3" style="padding-bottom:0px;">
+    <NavLink class="nav-link" href="/Shop" Match="NavLinkMatch.All">
+        <span class="fas fa-cart-shopping" aria-hidden="true"></span> <div style="padding-left:25px; text-align:center;margin-bottom:0px;">Store & Shop</div>
+    </NavLink>
+</div>
+<hr class="divider" style="height: 1px; background-color: white; color: white;" />
+<li style="list-style-type:none;color:#F5F5F5; padding-left:8px; padding-top:5px;"><h5>Shop - categories </h5></li>
+
+@if (Category_Service != null && Category_Service.Categories != null)
+{
+    @foreach (Category category in Category_Service.Categories)
+    {
+        <li class="nav-item px-3" style="list-style-type:none;">
+            <NavLink class="nav-link" href="@category.Url">
+                <i><span class="fas fa-@category.Icon" aria-hidden="true"></span> </i><p style="padding-left:25px; text-align:center;margin-bottom:0px;">@category.Name</p>
+            </NavLink>
+        </li>
+    }
+}
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Category_Service.LoadCategories();
+    }
+}

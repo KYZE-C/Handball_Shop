@@ -1,0 +1,59 @@
+﻿@page "/cart"
+@inject ICart_Service Cart_Service
+
+<h1 style="margin-bottom:25px;"> Shopping Cart </h1>
+
+@if (cart_Items == null || cart_Items.Count <= 0)
+{
+    <span>Your Cart has no items</span>
+}
+else
+{
+    foreach (var item in cart_Items)
+    {
+        <div class="cart-items-container">
+            <img src="@item.Product_Image">
+            <ul>
+                <li>
+                    <a style="text-decoration:none;" href="/product/@item.ProductId">
+                        <h3>@item.Product_Title</h3>
+                    </a>
+                </li>
+
+                <li class="cart-variant">
+                    <h5>Item size : @item.Addition_Name</h5>
+                </li>
+
+                <li>
+                    <h5 class="cart-item-price">Item Price : £@item.Price</h5>
+                </li>
+                <li>
+                    <button @onclick="@(() => DeleteItem(item))" class="delete-button">
+                        <i class="fas fa-ban"></i>
+                        <p style="padding-bottom:2px;">Delete</p>
+                    </button>
+
+                </li>
+            </ul>           
+        </div>
+    }
+    <p class="cart-count">Items in cart (@cart_Items.Count)</p>
+    <p class="cart-totalprice">Total price : (£@cart_Items.Sum(v => v.Price))</p>
+}
+
+
+
+@code {
+    List<Cart_Item> cart_Items = new List<Cart_Item>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        cart_Items = await Cart_Service.GetCart_Items();
+    }
+    private async Task DeleteItem(Cart_Item Item)
+    {
+        await Cart_Service.DeleteItem(Item);
+        cart_Items = await Cart_Service.GetCart_Items();
+
+    }
+}
