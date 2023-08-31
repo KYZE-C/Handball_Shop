@@ -10,6 +10,9 @@
 .navbar-brand {
     font-size: 1.1rem;
 }
+.nav-login {
+    min-inline-size:40px;
+}
 
 .oi {
     width: 2rem;

@@ -1,5 +1,16 @@
 ﻿@page "/"
+@inject ISyncLocalStorageService LocalStorage
 
-<h1>Welcome to Handball Sports Equipment Store</h1>
+<AuthorizeView>
+	<Authorized>
+		<h1>Welcome to Handball Sports Equipment Store @LocalStorage.GetItemAsString("username")</h1>
 
-<a href="/Shop"><h1>Shop</h1></a>
+		<a href="/Shop"><h1>Shop</h1></a>
+	</Authorized>
+	<NotAuthorized>
+		<h1>Welcome to Handball Sports Equipment Store</h1>
+
+		<a href="/Shop"><h1>Shop</h1></a>
+	</NotAuthorized>
+</AuthorizeView>
+
