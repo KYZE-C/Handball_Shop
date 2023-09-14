@@ -3,22 +3,27 @@
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider _AuthenticationStateProvider
 
-<EditForm Model="user" OnSubmit="OnLogin">
-	<div class="form-username">
-		<label for="username">Username</label>
-		<InputText id="username" @bind-Value="user.UserName"></InputText>
-	</div>
-	<div class="form-password">
-		<label for="password">Password</label>
-		<InputText id="password" type="password" @bind-Value="user.Password"></InputText>
-	</div>
-	<div class="form-email">
-		<label for="email">Email</label>
-		<InputText id="email" @bind-Value="user.Email"></InputText>
-	</div>
+<div class="login-container">
+    <div class="login-content">
+        <EditForm Model="user" OnSubmit="OnLogin" class="login-details">
+            <div class="form-field">
+                <label class="form-label" for="username">Username</label>
+                <InputText id="username" @bind-Value="user.UserName"></InputText>
+            </div>
+            <div class="form-field">
+                <label class="form-label" for="password">Password</label>
+                <InputText id="password" type="password" @bind-Value="user.Password"></InputText>
+            </div>
+            <div class="form-field">
+                <label class="form-label" for="email">Email</label>
+                <InputText id="email" @bind-Value="user.Email"></InputText>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </EditForm>
+    </div>
+</div>
 
-	<button type="submit" class="btn btn-primary">Login</button>
-</EditForm>
+
 
 
 @code {
