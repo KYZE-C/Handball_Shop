@@ -7,7 +7,8 @@ namespace Handball_Shopv1.Client.Services.Product_Service
     {
         event Action OnChange;
 
-        List<Product> Products { get; set; }
+		List<Product> filteredproducts { get; set; }
+		List<Product> Products { get; set; }
 
         Task LoadProducts(string CategoryURL = null);
 

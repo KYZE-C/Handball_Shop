@@ -32,7 +32,6 @@ else
                         <i class="fas fa-ban"></i>
                         <p style="padding-bottom:2px;">Delete</p>
                     </button>
-
                 </li>
             </ul>           
         </div>
@@ -40,8 +39,6 @@ else
     <p class="cart-count">Items in cart (@cart_Items.Count)</p>
     <p class="cart-totalprice">Total price : (£@cart_Items.Sum(v => v.Price))</p>
 }
-
-
 
 @code {
     List<Cart_Item> cart_Items = new List<Cart_Item>();

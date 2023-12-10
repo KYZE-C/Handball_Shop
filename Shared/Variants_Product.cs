@@ -12,7 +12,7 @@ namespace Handball_Shopv1.Shared
         [JsonIgnore]
         public Product Product { get; set; }
         public int ProductId { get; set; }
-        public Platform Addition { get; set; }
+        public Variants Addition { get; set; }
         public int AdditionId { get; set; }
         public double? Price { get; set; } = null;
         public double? OriginalPrice { get; set; } = null;

@@ -28,7 +28,7 @@ namespace Handball_Shopv1.Server.Services.Category_Services_srv
             }
             else
             {
-                string message = "Null refrence by Category returned";
+                string message = "Null reference by Category returned";
                 throw new Exception(message);
             }
         }

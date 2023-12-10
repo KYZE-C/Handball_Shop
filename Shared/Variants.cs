@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Handball_Shopv1.Shared
 {
-    public class Platform
+    public class Variants
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -1,4 +1,5 @@
 ﻿using Handball_Shopv1.Shared;
+using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
 using static System.Net.WebRequestMethods;
 
@@ -9,10 +10,10 @@ namespace Handball_Shopv1.Client.Services.Product_Service
         public event Action OnChange;
 
         private readonly HttpClient _http;
+		public List<Product> filteredproducts { get; set; } = new List<Product>();
+		public List<Product> Products { get; set; } = new List<Product>();
 
-        public List<Product> Products { get; set; } = new List<Product>();
-
-        public Product_Service(HttpClient http)
+		public Product_Service(HttpClient http)
         {
             _http = http;
         }
@@ -21,7 +22,9 @@ namespace Handball_Shopv1.Client.Services.Product_Service
             if (CategoryURL == null)
             {
                 Products = await _http.GetFromJsonAsync<List<Product>>("api/Products");
-            }
+                filteredproducts = Products.ToList();
+                OnChange.Invoke();
+			}
             else
             {
                 Products = await _http.GetFromJsonAsync<List<Product>>($"api/Products/Category/{CategoryURL}");

@@ -2,9 +2,9 @@
 @implements IDisposable
 
 <ul class="list-unsorted" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; margin: 0;">
+   
     @foreach (var product in Product_Service.Products)
     {
-
         <li class="media my-3 product-item" style="background-color: whitesmoke; color: black; max-width:255px; margin: 0 5px; padding: 10px;">
             <div class="media-img-wrapper mr-2" style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
                 <a href="/product/@product.Id">
@@ -30,12 +30,13 @@
             </div>
         </li>
     }
-
 </ul>
 
 @code
 {
-    public string TitleSize (Product product)
+    List<Product> products_todisplay;
+
+    public string TitleSize(Product product)
     {
         if (product.Title.Length <= 20)
         {
@@ -53,7 +54,7 @@
         {
             return "0.8rem";
         }
-        
+
     }
 
     protected override void OnInitialized()
