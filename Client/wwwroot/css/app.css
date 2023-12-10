@@ -81,7 +81,7 @@ body {
 }
 
 .product-item {
-    border: 3px solid black;
+    border: 2px solid black;
     border-radius: 5px;
     padding: 10px;
     border-block-color: black;
