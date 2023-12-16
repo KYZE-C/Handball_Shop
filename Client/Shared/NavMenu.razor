@@ -1,22 +1,22 @@
 ﻿@inject ICategory_Service Category_Service
 @inject ILocalStorageService LocalStorage
 @inject AuthenticationStateProvider AuthStateProvider
+@inject IProducts_Service Product_Service
 
-<div class="nav-item" style="min-inline-size:300px;">
-	<h2 class="handball">
-		Handball <span class="shop">Shop</span><i style="font-size: 1.8rem; vertical-align: middle; margin-bottom:4px;" class="fas fa-futbol" />
-	</h2>
-</div>
-<div class="nav-item px-3">
+<h2 class="handball">
+	Handball <span class="shop">Shop</span><i style="font-size: 1.3rem; vertical-align: middle;" class="fas fa-futbol" />
+</h2>
+<div class="nav-item">
 	<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
 		<span class="oi oi-home" aria-hidden="true"></span>Home
 	</NavLink>
 </div>
-<div class="nav-item px-3">
+<div class="nav-item">
 	<NavLink class="nav-link" href="/Shop" Match="NavLinkMatch.All">
 		<span class="fas fa-cart-shopping" aria-hidden="true"></span> <div style="text-align:center;margin-bottom:0px;">Store & Shop</div>
 	</NavLink>
 </div>
+<SearchBox products="productslist" OnSearch="UpdateFilteredProducts"/>
 
 @if (Category_Service != null && Category_Service.Categories != null)
 {
@@ -37,14 +37,14 @@ else
 
 <AuthorizeView>
 	<NotAuthorized>
-		<li class="nav-item px-3" style="list-style-type:none;">
+		<li class="nav-item" style="list-style-type:none;">
 			<NavLink class="nav-link" href="login">
 				<i class="nav-login"><span class="oi oi-account-login" aria-hidden="true"></span> </i><p style="text-align:center;margin-bottom:0px;">Sign In</p>
 			</NavLink>
 		</li>
 	</NotAuthorized>
 	<Authorized>
-		<li class="nav-item px-3" style="list-style-type:none;">
+		<li class="nav-item" style="list-style-type:none;">
 			<a class="nav-link" href="login" @onclick="SignOut">
 				<i class="nav-login"><span class="oi oi-account-logout" aria-hidden="true"></span> </i><p style="text-align:center;margin-bottom:0px;">Sign out</p>
 			</a>
@@ -52,13 +52,13 @@ else
 	</Authorized>
 </AuthorizeView>
 
-<div class="nav-item px-3">
-	<TopBar />
+<div class="nav-item">
+	<TopBar/>
 </div>
 
-
-
 @code {
+	List<Product>? productslist;
+
 	private bool collapseNavMenu = true;
 
 	private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
@@ -70,6 +70,7 @@ else
 
 	protected override async Task OnInitializedAsync()
 	{
+		productslist = Product_Service.Products;
 		await Category_Service.LoadCategories();
 	}
 
@@ -77,5 +78,18 @@ else
 	{
 		await LocalStorage.RemoveItemAsync("username");
 		await AuthStateProvider.GetAuthenticationStateAsync();
+	}
+
+	public void UpdateFilteredProducts(string searchitem)
+	{
+		if (searchitem != null)
+		{
+			productslist = productslist.Where(p => p.Title.Contains(searchitem, StringComparison.OrdinalIgnoreCase)).ToList();
+		}
+		else if (searchitem == null)
+		{
+			productslist = null;
+		}
+		StateHasChanged();
 	}
 }

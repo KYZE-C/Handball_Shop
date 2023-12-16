@@ -4,6 +4,7 @@ using Handball_Shopv1.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Handball_Shopv1.Server.Migrations
 {
     [DbContext(typeof(Data_ctx))]
-    partial class Data_ctxModelSnapshot : ModelSnapshot
+    [Migration("20231006152629_Laptop")]
+    partial class Laptop
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,6 +77,70 @@ namespace Handball_Shopv1.Server.Migrations
                             Icon = "headphones",
                             Name = "Accessories",
                             Url = "accessories"
+                        });
+                });
+
+            modelBuilder.Entity("Handball_Shopv1.Shared.Platform", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Platforms");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "XS"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "S"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "M"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "L"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "XL"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "1"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "2"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "3"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Default"
                         });
                 });
 
@@ -243,70 +310,6 @@ namespace Handball_Shopv1.Server.Migrations
                             IsDeleted = false,
                             IsPublic = false,
                             Title = "Handball Headband"
-                        });
-                });
-
-            modelBuilder.Entity("Handball_Shopv1.Shared.Variants", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Platforms");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "XS"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "S"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "M"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "L"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "XL"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "1"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "2"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "3"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Default"
                         });
                 });
 
@@ -537,7 +540,7 @@ namespace Handball_Shopv1.Server.Migrations
 
             modelBuilder.Entity("Handball_Shopv1.Shared.Variants_Product", b =>
                 {
-                    b.HasOne("Handball_Shopv1.Shared.Variants", "Addition")
+                    b.HasOne("Handball_Shopv1.Shared.Platform", "Addition")
                         .WithMany()
                         .HasForeignKey("AdditionId")
                         .OnDelete(DeleteBehavior.Cascade)
