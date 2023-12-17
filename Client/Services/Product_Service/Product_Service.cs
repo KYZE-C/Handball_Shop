@@ -10,7 +10,7 @@ namespace Handball_Shopv1.Client.Services.Product_Service
 
         private readonly HttpClient _http;
 
-        public List<Product> Products { get; set; } = new List<Product>();
+        public List<Product> Products { get; set; } = new List<Product>();//list is filled when shop page is initialized
 
         public Product_Service(HttpClient http)
         {

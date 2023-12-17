@@ -70,7 +70,7 @@ else
 
 	protected override async Task OnInitializedAsync()
 	{
-		productslist = Product_Service.Products;
+		
 		await Category_Service.LoadCategories();
 	}
 
@@ -82,9 +82,11 @@ else
 
 	public void UpdateFilteredProducts(string searchitem)
 	{
+		productslist = Product_Service.Products;
+
 		if (searchitem != null)
 		{
-			productslist = productslist.Where(p => p.Title.Contains(searchitem, StringComparison.OrdinalIgnoreCase)).ToList();
+			productslist = productslist.Where(p => p.Title.Contains(searchitem, StringComparison.OrdinalIgnoreCase)).ToList(); //searches for products by its title
 		}
 		else if (searchitem == null)
 		{
