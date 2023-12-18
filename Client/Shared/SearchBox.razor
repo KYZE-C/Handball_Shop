@@ -1,7 +1,7 @@
 ﻿@inject NavigationManager NavigationManager
 
 <div class="search_wrapper">
-    <input class="search_bar" @bind="searchitem" type="search" placeholder="Search for a product...">
+    <input class="search_bar" @bind="searchword" type="search" placeholder="Search for a product...">
     <button class="search-btn" @onclick="OnSearch_BTN" type="submit"><i class="fas fa-search"></i></button>
 </div>
 
@@ -48,11 +48,14 @@
     [Parameter]
     public EventCallback<string> OnSearch { get; set; }
 
-    private string searchitem;
+    private string searchword;
 
-    private async Task OnSearch_BTN()
+    private async Task OnSearch_BTN()//Called on click of search btn
     {
-        await OnSearch.InvokeAsync(searchitem);
+        if (OnSearch.HasDelegate)//equivlent to OnSearch != null
+        {
+            await OnSearch.InvokeAsync(searchword);
+        }
         NavigationManager.NavigateTo("/Shop");
     }
 }

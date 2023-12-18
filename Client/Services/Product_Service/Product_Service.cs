@@ -16,7 +16,7 @@ namespace Handball_Shopv1.Client.Services.Product_Service
         {
             _http = http;
         }
-        public async Task LoadProducts(string CategoryURL = null)
+        public async Task LoadProducts(string? CategoryURL = null)
         {
             if (CategoryURL == null)
             {
@@ -42,5 +42,12 @@ namespace Handball_Shopv1.Client.Services.Product_Service
                 throw new Exception();
             }    
         }
-    }
+        public List<Product>? FilteredProducts { get; set; } = new();
+
+		public void UpdateSearchedProducts(List<Product>? searchedproductslist)
+		{
+            FilteredProducts = searchedproductslist;
+			OnChange?.Invoke();
+		}
+	}
 }

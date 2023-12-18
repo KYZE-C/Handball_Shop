@@ -16,7 +16,7 @@
 		<span class="fas fa-cart-shopping" aria-hidden="true"></span> <div style="text-align:center;margin-bottom:0px;">Store & Shop</div>
 	</NavLink>
 </div>
-<SearchBox products="productslist" OnSearch="UpdateFilteredProducts"/>
+<SearchBox products="productslist" OnSearch="SearchProducts"/>
 
 @if (Category_Service != null && Category_Service.Categories != null)
 {
@@ -70,7 +70,7 @@ else
 
 	protected override async Task OnInitializedAsync()
 	{
-		
+
 		await Category_Service.LoadCategories();
 	}
 
@@ -80,18 +80,21 @@ else
 		await AuthStateProvider.GetAuthenticationStateAsync();
 	}
 
-	public void UpdateFilteredProducts(string searchitem)
+	public void SearchProducts(string searchitem)
 	{
 		productslist = Product_Service.Products;
 
-		if (searchitem != null)
+		if (searchitem != null && searchitem !="")
 		{
 			productslist = productslist.Where(p => p.Title.Contains(searchitem, StringComparison.OrdinalIgnoreCase)).ToList(); //searches for products by its title
 		}
-		else if (searchitem == null)
+		else
 		{
 			productslist = null;
 		}
+		Product_Service.UpdateSearchedProducts(productslist);
+
 		StateHasChanged();
+
 	}
 }
