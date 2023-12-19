@@ -1,6 +1,7 @@
 using Handball_Shopv1.Server.Data;
 using Handball_Shopv1.Server.Services.Category_Services_srv;
 using Handball_Shopv1.Server.Services.Product_Services_srv;
+using Handball_Shopv1.Server.Services.Stats_Service;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,7 @@ namespace Handball_Shopv1
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); 
             });
             builder.Services.AddScoped<ICategory_Service_srv, Category_Service_srv>();
+            builder.Services.AddScoped<IStats_Service_srv, Stats_Service_srv>();
             builder.Services.AddScoped<IProducts_Service_srv, Products_Service_srv>();
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();

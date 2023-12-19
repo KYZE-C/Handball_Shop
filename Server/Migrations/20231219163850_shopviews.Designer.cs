@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Handball_Shopv1.Server.Migrations
 {
     [DbContext(typeof(Data_ctx))]
-    [Migration("20230820075420_Variants_Final")]
-    partial class Variants_Final
+    [Migration("20231219163850_shopviews")]
+    partial class shopviews
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,70 +80,6 @@ namespace Handball_Shopv1.Server.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Handball_Shopv1.Shared.Platform", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Platforms");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "XS"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "S"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "M"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "L"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "XL"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "1"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "2"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "3"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Default"
-                        });
-                });
-
             modelBuilder.Entity("Handball_Shopv1.Shared.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -186,6 +122,7 @@ namespace Handball_Shopv1.Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -313,6 +250,70 @@ namespace Handball_Shopv1.Server.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Handball_Shopv1.Shared.Variants", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Platforms");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "XS"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "S"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "M"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "L"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "XL"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "1"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "2"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "3"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Default"
+                        });
+                });
+
             modelBuilder.Entity("Handball_Shopv1.Shared.Variants_Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -338,13 +339,15 @@ namespace Handball_Shopv1.Server.Migrations
                         {
                             ProductId = 1,
                             AdditionId = 9,
-                            OriginalPrice = 6.9900000000000002
+                            OriginalPrice = 6.9900000000000002,
+                            Price = 6.9900000000000002
                         },
                         new
                         {
                             ProductId = 2,
                             AdditionId = 6,
-                            OriginalPrice = 20.0
+                            OriginalPrice = 20.0,
+                            Price = 20.0
                         },
                         new
                         {
@@ -356,13 +359,14 @@ namespace Handball_Shopv1.Server.Migrations
                         {
                             ProductId = 2,
                             AdditionId = 8,
-                            Price = 20.399999999999999
+                            Price = 24.0
                         },
                         new
                         {
                             ProductId = 3,
                             AdditionId = 1,
-                            Price = 20.399999999999999
+                            OriginalPrice = 17.0,
+                            Price = 17.0
                         },
                         new
                         {
@@ -392,13 +396,15 @@ namespace Handball_Shopv1.Server.Migrations
                         {
                             ProductId = 4,
                             AdditionId = 9,
-                            OriginalPrice = 9.9900000000000002
+                            OriginalPrice = 9.9900000000000002,
+                            Price = 9.9900000000000002
                         },
                         new
                         {
                             ProductId = 5,
                             AdditionId = 1,
-                            OriginalPrice = 27.0
+                            OriginalPrice = 27.0,
+                            Price = 27.0
                         },
                         new
                         {
@@ -428,13 +434,15 @@ namespace Handball_Shopv1.Server.Migrations
                         {
                             ProductId = 6,
                             AdditionId = 9,
-                            OriginalPrice = 349.99000000000001
+                            OriginalPrice = 349.99000000000001,
+                            Price = 349.99000000000001
                         },
                         new
                         {
                             ProductId = 7,
                             AdditionId = 1,
-                            OriginalPrice = 69.989999999999995
+                            OriginalPrice = 69.989999999999995,
+                            Price = 69.989999999999995
                         },
                         new
                         {
@@ -464,13 +472,15 @@ namespace Handball_Shopv1.Server.Migrations
                         {
                             ProductId = 8,
                             AdditionId = 9,
-                            OriginalPrice = 3.9900000000000002
+                            OriginalPrice = 3.9900000000000002,
+                            Price = 3.9900000000000002
                         },
                         new
                         {
                             ProductId = 9,
                             AdditionId = 1,
-                            OriginalPrice = 2.0
+                            OriginalPrice = 2.0,
+                            Price = 2.0
                         },
                         new
                         {
@@ -500,7 +510,8 @@ namespace Handball_Shopv1.Server.Migrations
                         {
                             ProductId = 10,
                             AdditionId = 1,
-                            OriginalPrice = 3.0
+                            OriginalPrice = 3.0,
+                            Price = 3.0
                         },
                         new
                         {
@@ -530,7 +541,7 @@ namespace Handball_Shopv1.Server.Migrations
 
             modelBuilder.Entity("Handball_Shopv1.Shared.Variants_Product", b =>
                 {
-                    b.HasOne("Handball_Shopv1.Shared.Platform", "Addition")
+                    b.HasOne("Handball_Shopv1.Shared.Variants", "Addition")
                         .WithMany()
                         .HasForeignKey("AdditionId")
                         .OnDelete(DeleteBehavior.Cascade)

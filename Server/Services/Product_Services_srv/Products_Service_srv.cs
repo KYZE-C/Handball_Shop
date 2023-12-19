@@ -30,6 +30,9 @@ namespace Handball_Shopv1.Server.Services.Product_Services_srv
         public async Task<Product> GetSingleProduct(int? Id)
         {
             Product product = await _datacontext.Products.Include(c => c.Variants).ThenInclude(n => n.Addition).FirstOrDefaultAsync(p => p.Id == Id);
+            product.views++;
+            await _datacontext.SaveChangesAsync();
+
             if (product != null)
             {
                 return product;

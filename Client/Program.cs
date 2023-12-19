@@ -4,6 +4,7 @@ using Handball_Shopv1.Client;
 using Handball_Shopv1.Client.Services.Cart_Service;
 using Handball_Shopv1.Client.Services.Category_Service;
 using Handball_Shopv1.Client.Services.Product_Service;
+using Handball_Shopv1.Client.Services.Statistics_Service;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -28,8 +29,9 @@ namespace Handball_Shopv1.Client
 			builder.Services.AddOptions();
 			builder.Services.AddAuthorizationCore();
 			builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationState>();
+            builder.Services.AddScoped<IStats_Service, Stats_Service>();
 
-			await builder.Build().RunAsync();
+            await builder.Build().RunAsync();
 		}
 	}
 }

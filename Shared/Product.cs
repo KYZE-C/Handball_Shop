@@ -22,5 +22,7 @@ namespace Handball_Shopv1.Shared
         public string? SizeOfPreview { get; set; } = null;
         public double? Demensions { get; set; } = null;
         public string? ColorOfPreview { get; set; }
+
+        public int views { get; set; } = 0;
     }
 }

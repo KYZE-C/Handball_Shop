@@ -1,5 +1,6 @@
 ﻿@inject ICategory_Service Category_Service
 @inject IProducts_Service Products_Service
+@inject IStats_Service Stats_Service
 
 @page "/Shop"
 @page "/{CategoryURL}"
@@ -33,5 +34,7 @@ else
         {
             category_variable = null;
         }
+        await Stats_Service.IncrementVisits();
+        await Stats_Service.GetVisits();
     }
 }

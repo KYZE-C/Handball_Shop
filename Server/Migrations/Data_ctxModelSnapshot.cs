@@ -119,7 +119,11 @@ namespace Handball_Shopv1.Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("views")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -135,7 +139,8 @@ namespace Handball_Shopv1.Server.Migrations
                             Image = "https://contents.mediadecathlon.com/p974581/k$5043e312a6d703b0fbbeee605bb2c18e/handball-200-ml-resin-white.jpg?&f=800x800",
                             IsDeleted = false,
                             IsPublic = false,
-                            Title = "Resin"
+                            Title = "Resin",
+                            views = 0
                         },
                         new
                         {
@@ -147,7 +152,8 @@ namespace Handball_Shopv1.Server.Migrations
                             IsDeleted = false,
                             IsPublic = false,
                             SizeOfPreview = "2",
-                            Title = "Handball"
+                            Title = "Handball",
+                            views = 0
                         },
                         new
                         {
@@ -159,7 +165,8 @@ namespace Handball_Shopv1.Server.Migrations
                             IsDeleted = false,
                             IsPublic = false,
                             SizeOfPreview = "M",
-                            Title = "Handball Goalkeeper Gloves"
+                            Title = "Handball Goalkeeper Gloves",
+                            views = 0
                         },
                         new
                         {
@@ -170,7 +177,8 @@ namespace Handball_Shopv1.Server.Migrations
                             Image = "https://th.bing.com/th/id/OIP.fmooRuaDr8s4PgXttfwTrwHaHa?w=196&h=196&c=7&r=0&o=5&dpr=1.3&pid=1.7",
                             IsDeleted = false,
                             IsPublic = false,
-                            Title = "Handball Training Cones"
+                            Title = "Handball Training Cones",
+                            views = 0
                         },
                         new
                         {
@@ -182,7 +190,8 @@ namespace Handball_Shopv1.Server.Migrations
                             IsDeleted = false,
                             IsPublic = false,
                             SizeOfPreview = "XL",
-                            Title = "Handball Jersey"
+                            Title = "Handball Jersey",
+                            views = 0
                         },
                         new
                         {
@@ -194,7 +203,8 @@ namespace Handball_Shopv1.Server.Migrations
                             IsDeleted = false,
                             IsPublic = false,
                             SizeOfPreview = "Standard",
-                            Title = "Handball Goal"
+                            Title = "Handball Goal",
+                            views = 0
                         },
                         new
                         {
@@ -206,7 +216,8 @@ namespace Handball_Shopv1.Server.Migrations
                             IsDeleted = false,
                             IsPublic = false,
                             SizeOfPreview = "US 11",
-                            Title = "Handball Court Shoes"
+                            Title = "Handball Court Shoes",
+                            views = 0
                         },
                         new
                         {
@@ -218,7 +229,8 @@ namespace Handball_Shopv1.Server.Migrations
                             Image = "https://th.bing.com/th/id/OIP.Hj1oxc9FtHsW9fMmVKtjsgHaFT?w=250&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
                             IsDeleted = false,
                             IsPublic = false,
-                            Title = "Handball Wristband"
+                            Title = "Handball Wristband",
+                            views = 0
                         },
                         new
                         {
@@ -230,7 +242,8 @@ namespace Handball_Shopv1.Server.Migrations
                             IsDeleted = false,
                             IsPublic = false,
                             SizeOfPreview = "UK 8-10",
-                            Title = "Handball Court Socks"
+                            Title = "Handball Court Socks",
+                            views = 0
                         },
                         new
                         {
@@ -242,8 +255,28 @@ namespace Handball_Shopv1.Server.Migrations
                             Image = "https://th.bing.com/th/id/OIP.gnTH3x7XoeTS3TWwKZzZKAHaHa?w=202&h=202&c=7&r=0&o=5&dpr=1.3&pid=1.7",
                             IsDeleted = false,
                             IsPublic = false,
-                            Title = "Handball Headband"
+                            Title = "Handball Headband",
+                            views = 0
                         });
+                });
+
+            modelBuilder.Entity("Handball_Shopv1.Shared.Statistics", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime?>("LastUserVisit")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Visits")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Statistics");
                 });
 
             modelBuilder.Entity("Handball_Shopv1.Shared.Variants", b =>

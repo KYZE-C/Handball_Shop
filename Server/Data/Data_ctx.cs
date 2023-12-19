@@ -16,6 +16,7 @@ namespace Handball_Shopv1.Server.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Variants> Platforms { get; set; }
+        public DbSet<Statistics> Statistics { get; set; }
 
         public List<double> originalprices { get; set; } = new List<double> { 6.99, 20, 17, 9.99, 27, 349.99, 69.99, 3.99, 2, 3 };
         protected override void OnModelCreating(ModelBuilder modelBuilder)
