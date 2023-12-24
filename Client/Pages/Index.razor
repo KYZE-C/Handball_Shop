@@ -1,16 +1,60 @@
 ﻿@page "/"
 @inject ISyncLocalStorageService LocalStorage
 
-<AuthorizeView>
-	<Authorized>
-		<h1>Welcome to Handball Sports Equipment Store @LocalStorage.GetItemAsString("username")</h1>
+<style>
+	.index {
+		z-index: 103;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-80%,-80%);
+		font-family: Neoneon,sans-serif;
+		color: white;
+		padding-left: 50px;
+		border-left: 3px dashed white;
+	}
 
-		<a href="/Shop"><h1>Shop</h1></a>
-	</Authorized>
-	<NotAuthorized>
-		<h1>Welcome to Handball Sports Equipment Store</h1>
+	.index-text {
+		-webkit-text-stroke:thick black;
+	}
 
-		<a href="/Shop"><h1>Shop</h1></a>
-	</NotAuthorized>
-</AuthorizeView>
+	.index-img {
+		z-index: 101;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 150%;
+		transform: translate(-0%,-30%)
+	}
+
+	.shop-btn {
+		margin-top: 10px;
+		padding: 13px;
+		border-radius: 5px;
+		background-color: blue;
+		font-size: 1.3rem;
+		color: white;
+	}
+</style>
+
+<img class="index-img" src="/background-img.jpeg">
+<div class="index">
+	<AuthorizeView>
+		<Authorized>
+			<div class="index-text">
+				<h1>Welcome back @LocalStorage.GetItemAsString("username")!</h1>
+				<h1>Ready to shop?</h1>
+				<a href="/Shop"><button class="shop-btn">Yes, Take me there!</button></a>
+			</div>
+		</Authorized>
+		<NotAuthorized>
+			<div class="index-text">
+				<h1>Welcome to the Handball equipment store!</h1>
+				<h2>Ready to shop?</h2>
+			</div>
+			<a href="/Shop"><button class="shop-btn">Yes, Take me there!</button></a>
+		</NotAuthorized>
+	</AuthorizeView>
+</div>
 

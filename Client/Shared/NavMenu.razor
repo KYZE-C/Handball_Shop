@@ -1,43 +1,50 @@
 ﻿@inject ICategory_Service Category_Service
 @inject ILocalStorageService LocalStorage
 @inject AuthenticationStateProvider AuthStateProvider
+@inject IProducts_Service Product_Service
 
-<div style="margin-bottom:10px;" class="top-row ps-3 navbar navbar-light fixed-navbar"></div>
-
-<div class="nav-item px-3 ">
+<h2 class="handball">
+	Handball <span class="shop">Shop</span><i style="font-size: 1.3rem; vertical-align: middle;" class="fas fa-futbol" />
+</h2>
+<div class="nav-item">
 	<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-		<span class="oi oi-home" style="padding-right:40px;" aria-hidden="true"></span>Home
+		<span class="oi oi-home" aria-hidden="true"></span>Home
 	</NavLink>
 </div>
-<div class="nav-item px-3" style="padding-bottom:0px;">
+<div class="nav-item">
 	<NavLink class="nav-link" href="/Shop" Match="NavLinkMatch.All">
-		<span class="fas fa-cart-shopping" aria-hidden="true"></span> <div style="padding-left:25px; text-align:center;margin-bottom:0px;">Store & Shop</div>
+		<span class="fas fa-cart-shopping" aria-hidden="true"></span> <div style="text-align:center;margin-bottom:0px;">Store & Shop</div>
 	</NavLink>
 </div>
-<hr class="divider" style="height: 1px; background-color: white; color: white;" />
-<li style="list-style-type:none;color:#F5F5F5; padding-left:8px; padding-top:5px;"><h5>Shop - categories </h5></li>
+<SearchBox products="productslist" OnSearch="SearchProducts"/>
 
 @if (Category_Service != null && Category_Service.Categories != null)
 {
 	@foreach (Category category in Category_Service.Categories)
 	{
-		<li class="nav-item px-3" style="list-style-type:none;">
+		<li class="nav-item-category px-3" style="list-style-type:none;">
 			<NavLink class="nav-link" href="@category.Url">
-				<i class="nav-login"><span class="fas fa-@category.Icon" aria-hidden="true"></span> </i><p style="; text-align:center;margin-bottom:0px;">@category.Name</p>
+				<i class="nav-login"><span class="fas fa-@category.Icon" aria-hidden="true"></span> </i><p style="text-align:center;margin-bottom:0px;">@category.Name</p>
 			</NavLink>
 		</li>
 	}
 }
+else
+{
+	Console.WriteLine("Categories are null");
+}
+
+
 <AuthorizeView>
 	<NotAuthorized>
-		<li class="nav-item px-3" style="list-style-type:none;">
+		<li class="nav-item" style="list-style-type:none;">
 			<NavLink class="nav-link" href="login">
 				<i class="nav-login"><span class="oi oi-account-login" aria-hidden="true"></span> </i><p style="text-align:center;margin-bottom:0px;">Sign In</p>
 			</NavLink>
 		</li>
 	</NotAuthorized>
 	<Authorized>
-		<li class="nav-item px-3" style="list-style-type:none;">
+		<li class="nav-item" style="list-style-type:none;">
 			<a class="nav-link" href="login" @onclick="SignOut">
 				<i class="nav-login"><span class="oi oi-account-logout" aria-hidden="true"></span> </i><p style="text-align:center;margin-bottom:0px;">Sign out</p>
 			</a>
@@ -45,8 +52,13 @@
 	</Authorized>
 </AuthorizeView>
 
+<div class="nav-item">
+	<TopBar/>
+</div>
 
 @code {
+	List<Product>? productslist;
+
 	private bool collapseNavMenu = true;
 
 	private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
@@ -58,6 +70,7 @@
 
 	protected override async Task OnInitializedAsync()
 	{
+
 		await Category_Service.LoadCategories();
 	}
 
@@ -65,5 +78,23 @@
 	{
 		await LocalStorage.RemoveItemAsync("username");
 		await AuthStateProvider.GetAuthenticationStateAsync();
+	}
+
+	public void SearchProducts(string searchitem)
+	{
+		productslist = Product_Service.Products;
+
+		if (searchitem != null && searchitem !="")
+		{
+			productslist = productslist.Where(p => p.Title.Contains(searchitem, StringComparison.OrdinalIgnoreCase)).ToList(); //searches for products by its title
+		}
+		else
+		{
+			productslist = null;
+		}
+		Product_Service.UpdateSearchedProducts(productslist);
+
+		StateHasChanged();
+
 	}
 }

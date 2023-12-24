@@ -1,27 +1,27 @@
 ﻿@inject ICategory_Service Category_Service
 @inject IProducts_Service Products_Service
+@inject IStats_Service Stats_Service
 
 @page "/Shop"
 @page "/{CategoryURL}"
 
 @if (category_variable != null)
 {
-    <h3>Welcome to the @category_variable.Name category</h3>
+    <h2>Welcome to the @category_variable.Name category</h2>
     <ListProducts/>
 }
 else
 {
-    <h3>Welcome to the Shop</h3>
+    <h2>Welcome to the Shop</h2>
     <ListProducts />
 }
 
-
 @code
 {
-    private Category category_variable = null;
+    private Category? category_variable = null;
 
     [Parameter]
-    public string CategoryURL { get; set; }
+    public string? CategoryURL { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -34,5 +34,7 @@ else
         {
             category_variable = null;
         }
+        await Stats_Service.IncrementVisits();
+        await Stats_Service.GetVisits();
     }
 }

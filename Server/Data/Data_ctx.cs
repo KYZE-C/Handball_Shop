@@ -15,7 +15,8 @@ namespace Handball_Shopv1.Server.Data
         public Data_ctx(DbContextOptions<Data_ctx> options) : base(options) { }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Platform> Platforms { get; set; }
+        public DbSet<Variants> Platforms { get; set; }
+        public DbSet<Statistics> Statistics { get; set; }
 
         public List<double> originalprices { get; set; } = new List<double> { 6.99, 20, 17, 9.99, 27, 349.99, 69.99, 3.99, 2, 3 };
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -133,16 +134,16 @@ namespace Handball_Shopv1.Server.Data
             );
 
 
-            modelBuilder.Entity<Platform>().HasData(
-                new Platform { Id = 1, Name = "XS" },
-                new Platform { Id = 2, Name = "S" },
-                new Platform { Id = 3, Name = "M" },
-                new Platform { Id = 4, Name = "L" },
-                new Platform { Id = 5, Name = "XL" },
-                new Platform { Id = 6, Name = "1" },
-                new Platform { Id = 7, Name = "2" },
-                new Platform { Id = 8, Name = "3" },
-                new Platform { Id = 9, Name = "Default" }
+            modelBuilder.Entity<Variants>().HasData(
+                new Variants { Id = 1, Name = "XS" },
+                new Variants { Id = 2, Name = "S" },
+                new Variants { Id = 3, Name = "M" },
+                new Variants { Id = 4, Name = "L" },
+                new Variants { Id = 5, Name = "XL" },
+                new Variants { Id = 6, Name = "1" },
+                new Variants { Id = 7, Name = "2" },
+                new Variants { Id = 8, Name = "3" },
+                new Variants { Id = 9, Name = "Default" }
             );//2, 3, 5, 7, 9, 10
 
             modelBuilder.Entity<Variants_Product>().HasData(

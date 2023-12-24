@@ -10,13 +10,13 @@ namespace Handball_Shopv1.Client.Services.Product_Service
 
         private readonly HttpClient _http;
 
-        public List<Product> Products { get; set; } = new List<Product>();
+        public List<Product> Products { get; set; } = new List<Product>();//list is filled when shop page is initialized
 
         public Product_Service(HttpClient http)
         {
             _http = http;
         }
-        public async Task LoadProducts(string CategoryURL = null)
+        public async Task LoadProducts(string? CategoryURL = null)
         {
             if (CategoryURL == null)
             {
@@ -42,5 +42,12 @@ namespace Handball_Shopv1.Client.Services.Product_Service
                 throw new Exception();
             }    
         }
-    }
+        public List<Product>? FilteredProducts { get; set; } = new();
+
+		public void UpdateSearchedProducts(List<Product>? searchedproductslist)
+		{
+            FilteredProducts = searchedproductslist;
+			OnChange?.Invoke();
+		}
+	}
 }

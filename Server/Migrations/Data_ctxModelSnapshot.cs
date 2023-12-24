@@ -44,7 +44,7 @@ namespace Handball_Shopv1.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
@@ -77,7 +77,209 @@ namespace Handball_Shopv1.Server.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Handball_Shopv1.Shared.Platform", b =>
+            modelBuilder.Entity("Handball_Shopv1.Shared.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ColorOfPreview")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double?>("Demensions")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("Quality")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SizeOfPreview")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("views")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 4,
+                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "A sticky substance applied to the hands or ball to help provide grip when catching a ball",
+                            Image = "https://contents.mediadecathlon.com/p974581/k$5043e312a6d703b0fbbeee605bb2c18e/handball-200-ml-resin-white.jpg?&f=800x800",
+                            IsDeleted = false,
+                            IsPublic = false,
+                            Title = "Resin",
+                            views = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 1,
+                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "A ball used in the sport of handball, the ball comes in different sizes ranging from 1 to 3 where 1 is for individuals aged below 9, where 2 is for 9-16, and 3 is for ages 16+",
+                            Image = "https://th.bing.com/th/id/OIP.MWZvNTIlLKSKX-GA1fxD1wHaJ2?w=149&h=195&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+                            IsDeleted = false,
+                            IsPublic = false,
+                            SizeOfPreview = "2",
+                            Title = "Handball",
+                            views = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 1,
+                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "High-quality goalkeeper gloves designed for handball.",
+                            Image = "https://www.ushandball.org/wp-content/uploads/2020/04/55_202_edge-red-500x500-1.png",
+                            IsDeleted = false,
+                            IsPublic = false,
+                            SizeOfPreview = "M",
+                            Title = "Handball Goalkeeper Gloves",
+                            views = 0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 4,
+                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Set of 10 training cones for handball drills and agility exercises.",
+                            Image = "https://th.bing.com/th/id/OIP.fmooRuaDr8s4PgXttfwTrwHaHa?w=196&h=196&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+                            IsDeleted = false,
+                            IsPublic = false,
+                            Title = "Handball Training Cones",
+                            views = 0
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 2,
+                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Official handball jersey for players and fans.",
+                            Image = "https://th.bing.com/th/id/OIP.-o6S2LWJvZpQfGlN06hm2gHaHa?w=182&h=182&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+                            IsDeleted = false,
+                            IsPublic = false,
+                            SizeOfPreview = "XL",
+                            Title = "Handball Jersey",
+                            views = 0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 1,
+                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Sturdy handball goal for indoor and outdoor use.",
+                            Image = "https://th.bing.com/th/id/OIP.MPaYi-lsGE9Ls6TI6vJK7QHaHa?w=198&h=198&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+                            IsDeleted = false,
+                            IsPublic = false,
+                            SizeOfPreview = "Standard",
+                            Title = "Handball Goal",
+                            views = 0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CategoryId = 3,
+                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Specialized court shoes with excellent grip for handball.",
+                            Image = "https://th.bing.com/th/id/OIP.F_JVGxVV3o9j4G4xMMIl2AHaHa?w=184&h=184&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+                            IsDeleted = false,
+                            IsPublic = false,
+                            SizeOfPreview = "US 11",
+                            Title = "Handball Court Shoes",
+                            views = 0
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CategoryId = 4,
+                            ColorOfPreview = "Black",
+                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Absorbent wristband for handball players to wipe away sweat.",
+                            Image = "https://th.bing.com/th/id/OIP.Hj1oxc9FtHsW9fMmVKtjsgHaFT?w=250&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+                            IsDeleted = false,
+                            IsPublic = false,
+                            Title = "Handball Wristband",
+                            views = 0
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CategoryId = 3,
+                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Cushioned socks for maximum comfort during handball matches.",
+                            Image = "https://th.bing.com/th/id/OIP.UJClor0v7As5z6cIXXyk9QHaHa?w=200&h=200&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+                            IsDeleted = false,
+                            IsPublic = false,
+                            SizeOfPreview = "UK 8-10",
+                            Title = "Handball Court Socks",
+                            views = 0
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CategoryId = 2,
+                            ColorOfPreview = "Black",
+                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Sweat-absorbent headband to keep hair and sweat away during handball games.",
+                            Image = "https://th.bing.com/th/id/OIP.gnTH3x7XoeTS3TWwKZzZKAHaHa?w=202&h=202&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+                            IsDeleted = false,
+                            IsPublic = false,
+                            Title = "Handball Headband",
+                            views = 0
+                        });
+                });
+
+            modelBuilder.Entity("Handball_Shopv1.Shared.Statistics", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime?>("LastUserVisit")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Visits")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Statistics");
+                });
+
+            modelBuilder.Entity("Handball_Shopv1.Shared.Variants", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -91,7 +293,7 @@ namespace Handball_Shopv1.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Platforms", (string)null);
+                    b.ToTable("Platforms");
 
                     b.HasData(
                         new
@@ -141,175 +343,6 @@ namespace Handball_Shopv1.Server.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Handball_Shopv1.Shared.Product", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ColorOfPreview")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double?>("Demensions")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsPublic")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("Quality")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SizeOfPreview")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Products", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 4,
-                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "A sticky substance applied to the hands or ball to help provide grip when catching a ball",
-                            Image = "https://contents.mediadecathlon.com/p974581/k$5043e312a6d703b0fbbeee605bb2c18e/handball-200-ml-resin-white.jpg?&f=800x800",
-                            IsDeleted = false,
-                            IsPublic = false,
-                            Title = "Resin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 1,
-                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "A ball used in the sport of handball, the ball comes in different sizes ranging from 1 to 3 where 1 is for individuals aged below 9, where 2 is for 9-16, and 3 is for ages 16+",
-                            Image = "https://th.bing.com/th/id/OIP.MWZvNTIlLKSKX-GA1fxD1wHaJ2?w=149&h=195&c=7&r=0&o=5&dpr=1.3&pid=1.7",
-                            IsDeleted = false,
-                            IsPublic = false,
-                            SizeOfPreview = "2",
-                            Title = "Handball"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 1,
-                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "High-quality goalkeeper gloves designed for handball.",
-                            Image = "https://www.ushandball.org/wp-content/uploads/2020/04/55_202_edge-red-500x500-1.png",
-                            IsDeleted = false,
-                            IsPublic = false,
-                            SizeOfPreview = "M",
-                            Title = "Handball Goalkeeper Gloves"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CategoryId = 4,
-                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Set of 10 training cones for handball drills and agility exercises.",
-                            Image = "https://th.bing.com/th/id/OIP.fmooRuaDr8s4PgXttfwTrwHaHa?w=196&h=196&c=7&r=0&o=5&dpr=1.3&pid=1.7",
-                            IsDeleted = false,
-                            IsPublic = false,
-                            Title = "Handball Training Cones"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CategoryId = 2,
-                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Official handball jersey for players and fans.",
-                            Image = "https://th.bing.com/th/id/OIP.-o6S2LWJvZpQfGlN06hm2gHaHa?w=182&h=182&c=7&r=0&o=5&dpr=1.3&pid=1.7",
-                            IsDeleted = false,
-                            IsPublic = false,
-                            SizeOfPreview = "XL",
-                            Title = "Handball Jersey"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CategoryId = 1,
-                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Sturdy handball goal for indoor and outdoor use.",
-                            Image = "https://th.bing.com/th/id/OIP.MPaYi-lsGE9Ls6TI6vJK7QHaHa?w=198&h=198&c=7&r=0&o=5&dpr=1.3&pid=1.7",
-                            IsDeleted = false,
-                            IsPublic = false,
-                            SizeOfPreview = "Standard",
-                            Title = "Handball Goal"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CategoryId = 3,
-                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Specialized court shoes with excellent grip for handball.",
-                            Image = "https://th.bing.com/th/id/OIP.F_JVGxVV3o9j4G4xMMIl2AHaHa?w=184&h=184&c=7&r=0&o=5&dpr=1.3&pid=1.7",
-                            IsDeleted = false,
-                            IsPublic = false,
-                            SizeOfPreview = "US 11",
-                            Title = "Handball Court Shoes"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CategoryId = 4,
-                            ColorOfPreview = "Black",
-                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Absorbent wristband for handball players to wipe away sweat.",
-                            Image = "https://th.bing.com/th/id/OIP.Hj1oxc9FtHsW9fMmVKtjsgHaFT?w=250&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
-                            IsDeleted = false,
-                            IsPublic = false,
-                            Title = "Handball Wristband"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            CategoryId = 3,
-                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Cushioned socks for maximum comfort during handball matches.",
-                            Image = "https://th.bing.com/th/id/OIP.UJClor0v7As5z6cIXXyk9QHaHa?w=200&h=200&c=7&r=0&o=5&dpr=1.3&pid=1.7",
-                            IsDeleted = false,
-                            IsPublic = false,
-                            SizeOfPreview = "UK 8-10",
-                            Title = "Handball Court Socks"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            CategoryId = 2,
-                            ColorOfPreview = "Black",
-                            DateCreated = new DateTime(2023, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Sweat-absorbent headband to keep hair and sweat away during handball games.",
-                            Image = "https://th.bing.com/th/id/OIP.gnTH3x7XoeTS3TWwKZzZKAHaHa?w=202&h=202&c=7&r=0&o=5&dpr=1.3&pid=1.7",
-                            IsDeleted = false,
-                            IsPublic = false,
-                            Title = "Handball Headband"
-                        });
-                });
-
             modelBuilder.Entity("Handball_Shopv1.Shared.Variants_Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -328,7 +361,7 @@ namespace Handball_Shopv1.Server.Migrations
 
                     b.HasIndex("AdditionId");
 
-                    b.ToTable("Variants_Product", (string)null);
+                    b.ToTable("Variants_Product");
 
                     b.HasData(
                         new
@@ -537,7 +570,7 @@ namespace Handball_Shopv1.Server.Migrations
 
             modelBuilder.Entity("Handball_Shopv1.Shared.Variants_Product", b =>
                 {
-                    b.HasOne("Handball_Shopv1.Shared.Platform", "Addition")
+                    b.HasOne("Handball_Shopv1.Shared.Variants", "Addition")
                         .WithMany()
                         .HasForeignKey("AdditionId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Handball_Shopv1.Server.Migrations
 {
     [DbContext(typeof(Data_ctx))]
-    [Migration("20230818234350_WorkingOrder")]
-    partial class WorkingOrder
+    [Migration("20231219221743_viewcounter")]
+    partial class viewcounter
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,80 +80,6 @@ namespace Handball_Shopv1.Server.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Handball_Shopv1.Shared.Platform", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Platforms");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Yellow"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Red"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Blue"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Green"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Orange"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Purple"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Pink"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Brown"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "White"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Black"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Gray"
-                        });
-                });
-
             modelBuilder.Entity("Handball_Shopv1.Shared.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -189,12 +115,6 @@ namespace Handball_Shopv1.Server.Migrations
                     b.Property<bool>("IsPublic")
                         .HasColumnType("bit");
 
-                    b.Property<double>("OriginalPrice")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
                     b.Property<int?>("Quality")
                         .HasColumnType("int");
 
@@ -202,7 +122,11 @@ namespace Handball_Shopv1.Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("views")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -218,9 +142,8 @@ namespace Handball_Shopv1.Server.Migrations
                             Image = "https://contents.mediadecathlon.com/p974581/k$5043e312a6d703b0fbbeee605bb2c18e/handball-200-ml-resin-white.jpg?&f=800x800",
                             IsDeleted = false,
                             IsPublic = false,
-                            OriginalPrice = 5.0,
-                            Price = 5.5499999999999998,
-                            Title = "Resin"
+                            Title = "Resin",
+                            views = 0
                         },
                         new
                         {
@@ -231,10 +154,9 @@ namespace Handball_Shopv1.Server.Migrations
                             Image = "https://th.bing.com/th/id/OIP.MWZvNTIlLKSKX-GA1fxD1wHaJ2?w=149&h=195&c=7&r=0&o=5&dpr=1.3&pid=1.7",
                             IsDeleted = false,
                             IsPublic = false,
-                            OriginalPrice = 17.0,
-                            Price = 20.0,
                             SizeOfPreview = "2",
-                            Title = "Handball"
+                            Title = "Handball",
+                            views = 0
                         },
                         new
                         {
@@ -245,10 +167,9 @@ namespace Handball_Shopv1.Server.Migrations
                             Image = "https://www.ushandball.org/wp-content/uploads/2020/04/55_202_edge-red-500x500-1.png",
                             IsDeleted = false,
                             IsPublic = false,
-                            OriginalPrice = 40.0,
-                            Price = 32.990000000000002,
                             SizeOfPreview = "M",
-                            Title = "Handball Goalkeeper Gloves"
+                            Title = "Handball Goalkeeper Gloves",
+                            views = 0
                         },
                         new
                         {
@@ -259,9 +180,8 @@ namespace Handball_Shopv1.Server.Migrations
                             Image = "https://th.bing.com/th/id/OIP.fmooRuaDr8s4PgXttfwTrwHaHa?w=196&h=196&c=7&r=0&o=5&dpr=1.3&pid=1.7",
                             IsDeleted = false,
                             IsPublic = false,
-                            OriginalPrice = 15.0,
-                            Price = 12.5,
-                            Title = "Handball Training Cones"
+                            Title = "Handball Training Cones",
+                            views = 0
                         },
                         new
                         {
@@ -272,10 +192,9 @@ namespace Handball_Shopv1.Server.Migrations
                             Image = "https://th.bing.com/th/id/OIP.-o6S2LWJvZpQfGlN06hm2gHaHa?w=182&h=182&c=7&r=0&o=5&dpr=1.3&pid=1.7",
                             IsDeleted = false,
                             IsPublic = false,
-                            OriginalPrice = 30.0,
-                            Price = 25.989999999999998,
                             SizeOfPreview = "XL",
-                            Title = "Handball Jersey"
+                            Title = "Handball Jersey",
+                            views = 0
                         },
                         new
                         {
@@ -286,10 +205,9 @@ namespace Handball_Shopv1.Server.Migrations
                             Image = "https://th.bing.com/th/id/OIP.MPaYi-lsGE9Ls6TI6vJK7QHaHa?w=198&h=198&c=7&r=0&o=5&dpr=1.3&pid=1.7",
                             IsDeleted = false,
                             IsPublic = false,
-                            OriginalPrice = 120.0,
-                            Price = 99.989999999999995,
                             SizeOfPreview = "Standard",
-                            Title = "Handball Goal"
+                            Title = "Handball Goal",
+                            views = 0
                         },
                         new
                         {
@@ -300,10 +218,9 @@ namespace Handball_Shopv1.Server.Migrations
                             Image = "https://th.bing.com/th/id/OIP.F_JVGxVV3o9j4G4xMMIl2AHaHa?w=184&h=184&c=7&r=0&o=5&dpr=1.3&pid=1.7",
                             IsDeleted = false,
                             IsPublic = false,
-                            OriginalPrice = 90.0,
-                            Price = 74.989999999999995,
                             SizeOfPreview = "US 11",
-                            Title = "Handball Court Shoes"
+                            Title = "Handball Court Shoes",
+                            views = 0
                         },
                         new
                         {
@@ -315,9 +232,8 @@ namespace Handball_Shopv1.Server.Migrations
                             Image = "https://th.bing.com/th/id/OIP.Hj1oxc9FtHsW9fMmVKtjsgHaFT?w=250&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
                             IsDeleted = false,
                             IsPublic = false,
-                            OriginalPrice = 8.0,
-                            Price = 6.5,
-                            Title = "Handball Wristband"
+                            Title = "Handball Wristband",
+                            views = 0
                         },
                         new
                         {
@@ -328,10 +244,9 @@ namespace Handball_Shopv1.Server.Migrations
                             Image = "https://th.bing.com/th/id/OIP.UJClor0v7As5z6cIXXyk9QHaHa?w=200&h=200&c=7&r=0&o=5&dpr=1.3&pid=1.7",
                             IsDeleted = false,
                             IsPublic = false,
-                            OriginalPrice = 12.0,
-                            Price = 9.9900000000000002,
                             SizeOfPreview = "UK 8-10",
-                            Title = "Handball Court Socks"
+                            Title = "Handball Court Socks",
+                            views = 0
                         },
                         new
                         {
@@ -343,152 +258,341 @@ namespace Handball_Shopv1.Server.Migrations
                             Image = "https://th.bing.com/th/id/OIP.gnTH3x7XoeTS3TWwKZzZKAHaHa?w=202&h=202&c=7&r=0&o=5&dpr=1.3&pid=1.7",
                             IsDeleted = false,
                             IsPublic = false,
-                            OriginalPrice = 10.0,
-                            Price = 7.9900000000000002,
-                            Title = "Handball Headband"
+                            Title = "Handball Headband",
+                            views = 0
                         });
                 });
 
-            modelBuilder.Entity("PlatformProduct", b =>
+            modelBuilder.Entity("Handball_Shopv1.Shared.Statistics", b =>
                 {
-                    b.Property<int>("PlatformsId")
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductsId")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime?>("LastUserVisit")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Visits")
                         .HasColumnType("int");
 
-                    b.HasKey("PlatformsId", "ProductsId");
+                    b.HasKey("ID");
 
-                    b.HasIndex("ProductsId");
+                    b.ToTable("Statistics");
+                });
 
-                    b.ToTable("PlatformProduct");
+            modelBuilder.Entity("Handball_Shopv1.Shared.Variants", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Platforms");
 
                     b.HasData(
                         new
                         {
-                            PlatformsId = 1,
-                            ProductsId = 8
+                            Id = 1,
+                            Name = "XS"
                         },
                         new
                         {
-                            PlatformsId = 2,
-                            ProductsId = 8
+                            Id = 2,
+                            Name = "S"
                         },
                         new
                         {
-                            PlatformsId = 3,
-                            ProductsId = 8
+                            Id = 3,
+                            Name = "M"
                         },
                         new
                         {
-                            PlatformsId = 4,
-                            ProductsId = 8
+                            Id = 4,
+                            Name = "L"
                         },
                         new
                         {
-                            PlatformsId = 5,
-                            ProductsId = 8
+                            Id = 5,
+                            Name = "XL"
                         },
                         new
                         {
-                            PlatformsId = 6,
-                            ProductsId = 8
+                            Id = 6,
+                            Name = "1"
                         },
                         new
                         {
-                            PlatformsId = 7,
-                            ProductsId = 8
+                            Id = 7,
+                            Name = "2"
                         },
                         new
                         {
-                            PlatformsId = 8,
-                            ProductsId = 8
+                            Id = 8,
+                            Name = "3"
                         },
                         new
                         {
-                            PlatformsId = 9,
-                            ProductsId = 8
-                        },
-                        new
-                        {
-                            PlatformsId = 10,
-                            ProductsId = 8
-                        },
-                        new
-                        {
-                            PlatformsId = 11,
-                            ProductsId = 8
-                        },
-                        new
-                        {
-                            PlatformsId = 1,
-                            ProductsId = 10
-                        },
-                        new
-                        {
-                            PlatformsId = 2,
-                            ProductsId = 10
-                        },
-                        new
-                        {
-                            PlatformsId = 3,
-                            ProductsId = 10
-                        },
-                        new
-                        {
-                            PlatformsId = 4,
-                            ProductsId = 10
-                        },
-                        new
-                        {
-                            PlatformsId = 5,
-                            ProductsId = 10
-                        },
-                        new
-                        {
-                            PlatformsId = 6,
-                            ProductsId = 10
-                        },
-                        new
-                        {
-                            PlatformsId = 7,
-                            ProductsId = 10
-                        },
-                        new
-                        {
-                            PlatformsId = 8,
-                            ProductsId = 10
-                        },
-                        new
-                        {
-                            PlatformsId = 9,
-                            ProductsId = 10
-                        },
-                        new
-                        {
-                            PlatformsId = 10,
-                            ProductsId = 10
-                        },
-                        new
-                        {
-                            PlatformsId = 11,
-                            ProductsId = 10
+                            Id = 9,
+                            Name = "Default"
                         });
                 });
 
-            modelBuilder.Entity("PlatformProduct", b =>
+            modelBuilder.Entity("Handball_Shopv1.Shared.Variants_Product", b =>
                 {
-                    b.HasOne("Handball_Shopv1.Shared.Platform", null)
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AdditionId")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("OriginalPrice")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Price")
+                        .HasColumnType("float");
+
+                    b.HasKey("ProductId", "AdditionId");
+
+                    b.HasIndex("AdditionId");
+
+                    b.ToTable("Variants_Product");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductId = 1,
+                            AdditionId = 9,
+                            OriginalPrice = 6.9900000000000002,
+                            Price = 6.9900000000000002
+                        },
+                        new
+                        {
+                            ProductId = 2,
+                            AdditionId = 6,
+                            OriginalPrice = 20.0,
+                            Price = 20.0
+                        },
+                        new
+                        {
+                            ProductId = 2,
+                            AdditionId = 7,
+                            Price = 24.0
+                        },
+                        new
+                        {
+                            ProductId = 2,
+                            AdditionId = 8,
+                            Price = 24.0
+                        },
+                        new
+                        {
+                            ProductId = 3,
+                            AdditionId = 1,
+                            OriginalPrice = 17.0,
+                            Price = 17.0
+                        },
+                        new
+                        {
+                            ProductId = 3,
+                            AdditionId = 2,
+                            Price = 20.399999999999999
+                        },
+                        new
+                        {
+                            ProductId = 3,
+                            AdditionId = 3,
+                            Price = 20.399999999999999
+                        },
+                        new
+                        {
+                            ProductId = 3,
+                            AdditionId = 4,
+                            Price = 20.399999999999999
+                        },
+                        new
+                        {
+                            ProductId = 3,
+                            AdditionId = 5,
+                            Price = 20.399999999999999
+                        },
+                        new
+                        {
+                            ProductId = 4,
+                            AdditionId = 9,
+                            OriginalPrice = 9.9900000000000002,
+                            Price = 9.9900000000000002
+                        },
+                        new
+                        {
+                            ProductId = 5,
+                            AdditionId = 1,
+                            OriginalPrice = 27.0,
+                            Price = 27.0
+                        },
+                        new
+                        {
+                            ProductId = 5,
+                            AdditionId = 2,
+                            Price = 32.399999999999999
+                        },
+                        new
+                        {
+                            ProductId = 5,
+                            AdditionId = 3,
+                            Price = 32.399999999999999
+                        },
+                        new
+                        {
+                            ProductId = 5,
+                            AdditionId = 4,
+                            Price = 32.399999999999999
+                        },
+                        new
+                        {
+                            ProductId = 5,
+                            AdditionId = 5,
+                            Price = 32.399999999999999
+                        },
+                        new
+                        {
+                            ProductId = 6,
+                            AdditionId = 9,
+                            OriginalPrice = 349.99000000000001,
+                            Price = 349.99000000000001
+                        },
+                        new
+                        {
+                            ProductId = 7,
+                            AdditionId = 1,
+                            OriginalPrice = 69.989999999999995,
+                            Price = 69.989999999999995
+                        },
+                        new
+                        {
+                            ProductId = 7,
+                            AdditionId = 2,
+                            Price = 83.988
+                        },
+                        new
+                        {
+                            ProductId = 7,
+                            AdditionId = 3,
+                            Price = 83.988
+                        },
+                        new
+                        {
+                            ProductId = 7,
+                            AdditionId = 4,
+                            Price = 83.988
+                        },
+                        new
+                        {
+                            ProductId = 7,
+                            AdditionId = 5,
+                            Price = 83.988
+                        },
+                        new
+                        {
+                            ProductId = 8,
+                            AdditionId = 9,
+                            OriginalPrice = 3.9900000000000002,
+                            Price = 3.9900000000000002
+                        },
+                        new
+                        {
+                            ProductId = 9,
+                            AdditionId = 1,
+                            OriginalPrice = 2.0,
+                            Price = 2.0
+                        },
+                        new
+                        {
+                            ProductId = 9,
+                            AdditionId = 2,
+                            Price = 2.3999999999999999
+                        },
+                        new
+                        {
+                            ProductId = 9,
+                            AdditionId = 3,
+                            Price = 2.3999999999999999
+                        },
+                        new
+                        {
+                            ProductId = 9,
+                            AdditionId = 4,
+                            Price = 2.3999999999999999
+                        },
+                        new
+                        {
+                            ProductId = 9,
+                            AdditionId = 5,
+                            Price = 2.3999999999999999
+                        },
+                        new
+                        {
+                            ProductId = 10,
+                            AdditionId = 1,
+                            OriginalPrice = 3.0,
+                            Price = 3.0
+                        },
+                        new
+                        {
+                            ProductId = 10,
+                            AdditionId = 2,
+                            Price = 3.6000000000000001
+                        },
+                        new
+                        {
+                            ProductId = 10,
+                            AdditionId = 3,
+                            Price = 3.6000000000000001
+                        },
+                        new
+                        {
+                            ProductId = 10,
+                            AdditionId = 4,
+                            Price = 3.6000000000000001
+                        },
+                        new
+                        {
+                            ProductId = 10,
+                            AdditionId = 5,
+                            Price = 3.6000000000000001
+                        });
+                });
+
+            modelBuilder.Entity("Handball_Shopv1.Shared.Variants_Product", b =>
+                {
+                    b.HasOne("Handball_Shopv1.Shared.Variants", "Addition")
                         .WithMany()
-                        .HasForeignKey("PlatformsId")
+                        .HasForeignKey("AdditionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Handball_Shopv1.Shared.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
+                    b.HasOne("Handball_Shopv1.Shared.Product", "Product")
+                        .WithMany("Variants")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Addition");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Handball_Shopv1.Shared.Product", b =>
+                {
+                    b.Navigation("Variants");
                 });
 #pragma warning restore 612, 618
         }
