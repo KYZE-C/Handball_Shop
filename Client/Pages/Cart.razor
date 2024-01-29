@@ -1,11 +1,12 @@
 ﻿@page "/cart"
 @inject ICart_Service Cart_Service
+@inject NavigationManager NavigationManager
 
 <h1 style="margin-bottom:25px;"> Shopping Cart </h1>
 
 @if (cart_Items == null || cart_Items.Count <= 0)
 {
-    <span>Your Cart has no items</span>
+    <span>You have no items in your cart!</span>
 }
 else
 {
@@ -33,15 +34,65 @@ else
                         <p style="padding-bottom:2px;">Delete</p>
                     </button>
                 </li>
-            </ul>           
+            </ul>
         </div>
     }
     <p class="cart-count">Items in cart (@cart_Items.Count)</p>
     <p class="cart-totalprice">Total price : (£@cart_Items.Sum(v => v.Price))</p>
+    <button type="button" @onclick="@(() => Checkout_toggle())">Procceed to Checkout</button>
+    @if (checkoutdisplay == true)
+    {
+        <div style="background-color:white;" class="checkout">
+            @foreach (var item in cart_Items)
+            {
+                <div class="cart-items-container">
+                    <img style="width:50px;height:50px;" src="@item.Product_Image">
+                    <ul>
+                        <li>
+                            <p>@item.Product_Title</p>
+                        </li>
+                    </ul>
+                </div>
+            }
+            <p class="cart-totalprice">Total price : (£@cart_Items.Sum(v => v.Price))</p>
+            <hr>
+            <EditForm Model="checkout" OnSubmit="@(() => CheckoutSubmit())" class="login-details">
+                <div class="form-field">
+                    <div class="form-field">
+                        <label style="width:300px" class="form-label" for="Name">FirstName</label>
+                        <InputText id="Name" @bind-Value="checkout.Name"></InputText>
+                    </div>
+                    <label class="form-label" for="cardnumb">Card Number</label>
+                    <InputText id="cardnumb" placeholder="1234 5678 9876 5432" @bind-Value="checkout.CardNumb"></InputText>
+                </div>
+                <div class="form-field">
+                    <label class="form-label" for="expdate">Valid until</label>
+                    <InputText id="expdate" placeholder="MM/YY" style="width:100px;" @bind-Value="checkout.ExpDate"></InputText>
+                </div>
+                <div class="form-field">
+                    <label class="form-label" for="cvc">CVC</label>
+                    <InputText id="cvc" style="width:50px" placeholder="123" @bind-Value="checkout.CVC"></InputText>
+                </div>
+                <button type="submit" class="btn btn-primary">Complete Transaction</button>
+            </EditForm>
+        </div>
+        @if (paymentsuccess == 1)
+        {
+            <h1>Payment Successful!</h1>
+            <btn @onclick="@(() =>NavigateToShop())">Return to Shop?</btn>
+        }
+        if (paymentsuccess == 2)
+        {
+            <p>Card Details incorrect! Please enter the correct details.</p>
+        }
+    }
 }
 
 @code {
-    List<Cart_Item> cart_Items = new List<Cart_Item>();
+    private int paymentsuccess = 0;
+    private Checkout checkout = new Checkout();
+    public bool checkoutdisplay = false;
+    private List<Cart_Item> cart_Items = new List<Cart_Item>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -51,6 +102,25 @@ else
     {
         await Cart_Service.DeleteItem(Item);
         cart_Items = await Cart_Service.GetCart_Items();
-
+    }
+    public void Checkout_toggle()
+    {
+        checkoutdisplay = true;
+    }
+    public void CheckoutSubmit()
+    {
+        if (checkout.CardNumb.Length < 16 && checkout.CVC.Length != 3 && checkout.Name == null)
+        {
+            paymentsuccess = 1;
+        } else
+        {
+            paymentsuccess = 2;
+        }
+        
+    }
+    public void NavigateToShop()
+    {
+        cart_Items.Clear();
+        NavigationManager.NavigateTo("Shop");
     }
 }

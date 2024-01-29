@@ -36,14 +36,14 @@ else
 
 
 <AuthorizeView>
-	<NotAuthorized>
+	<NotAuthorized>@* View when the user is not authorized/logged in *@
 		<li class="nav-item" style="list-style-type:none;">
 			<NavLink class="nav-link" href="login">
 				<i class="nav-login"><span class="oi oi-account-login" aria-hidden="true"></span> </i><p style="text-align:center;margin-bottom:0px;">Sign In</p>
 			</NavLink>
 		</li>
 	</NotAuthorized>
-	<Authorized>
+	<Authorized>@* View when user is logged in *@
 		<li class="nav-item" style="list-style-type:none;">
 			<a class="nav-link" href="login" @onclick="SignOut">
 				<i class="nav-login"><span class="oi oi-account-logout" aria-hidden="true"></span> </i><p style="text-align:center;margin-bottom:0px;">Sign out</p>
@@ -53,7 +53,7 @@ else
 </AuthorizeView>
 
 <div class="nav-item">
-	<TopBar/>
+	<TopBar/> @* The shopping cart positioned on the top navigation bar *@
 </div>
 
 @code {
@@ -95,6 +95,5 @@ else
 		Product_Service.UpdateSearchedProducts(productslist);
 
 		StateHasChanged();
-
 	}
 }

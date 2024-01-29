@@ -7,6 +7,14 @@
     <div class="login-content">
         <EditForm Model="user" OnSubmit="OnLogin" class="login-details">
             <div class="form-field">
+                <div class="form-field">
+                    <label class="form-label" for="firstname">FirstName</label>
+                    <InputText id="firstname" @bind-Value="user.FirstName"></InputText>
+                </div>
+                <div class="form-field">
+                    <label class="form-label" for="surname">Surname</label>
+                    <InputText id="surname" @bind-Value="user.Surname"></InputText>
+                </div>
                 <label class="form-label" for="username">Username</label>
                 <InputText id="username" @bind-Value="user.UserName"></InputText>
             </div>
@@ -19,21 +27,48 @@
                 <InputText id="email" @bind-Value="user.Email"></InputText>
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
+            @if (validationcheck == 1)
+            {
+                <p>Please enter a password with a length bigger than 6 characters whilst smaller than 20!</p>
+            }
+            else if (validationcheck == 2)
+            {
+                <p>Please enter a valid email adress!</p>
+            }
         </EditForm>
     </div>
 </div>
 
 
-
-
 @code {
 
-	private User user = new User();
+    private User user = new User();
+    public int validationcheck = 0;
 
-	public async void OnLogin()
-	{
-		await LocalStorage.SetItemAsStringAsync("username", user.UserName);
-		await _AuthenticationStateProvider.GetAuthenticationStateAsync();
-		NavigationManager.NavigateTo("");
+    public async void OnLogin()
+    {
+        bool emailformat = false;
+        for (int i = 0; i < user.Email.Length; i++)
+        {
+            if (user.Email.Contains("@") == true)
+            {
+                emailformat = true;
+            }
+        }
+        if (user.Password.Length >= 6 && user.Password.Length <=20 && emailformat == true)
+        {
+            await LocalStorage.SetItemAsStringAsync("username", user.UserName);
+            await _AuthenticationStateProvider.GetAuthenticationStateAsync();
+            NavigationManager.NavigateTo("");
+        }
+        else if (emailformat == false)
+        {
+            validationcheck = 2;
+        }
+        else
+        {
+            validationcheck = 1;
+        }
+        
 	}
 }

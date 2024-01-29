@@ -65,8 +65,8 @@ ul.list-unsorted {
 }
 
 body {
+    background-image:url(/Images/back1.jpeg);
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: #fff;
 }
 
 .divider {
