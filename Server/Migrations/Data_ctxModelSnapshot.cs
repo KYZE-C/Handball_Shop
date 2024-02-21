@@ -44,7 +44,7 @@ namespace Handball_Shopv1.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -127,7 +127,7 @@ namespace Handball_Shopv1.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
 
                     b.HasData(
                         new
@@ -276,7 +276,7 @@ namespace Handball_Shopv1.Server.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Statistics");
+                    b.ToTable("Statistics", (string)null);
                 });
 
             modelBuilder.Entity("Handball_Shopv1.Shared.Variants", b =>
@@ -293,7 +293,7 @@ namespace Handball_Shopv1.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Platforms");
+                    b.ToTable("Platforms", (string)null);
 
                     b.HasData(
                         new
@@ -361,7 +361,7 @@ namespace Handball_Shopv1.Server.Migrations
 
                     b.HasIndex("AdditionId");
 
-                    b.ToTable("Variants_Product");
+                    b.ToTable("Variants_Product", (string)null);
 
                     b.HasData(
                         new

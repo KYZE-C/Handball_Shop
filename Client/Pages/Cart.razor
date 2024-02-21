@@ -42,7 +42,7 @@ else
     <button type="button" @onclick="@(() => Checkout_toggle())">Procceed to Checkout</button>
     @if (checkoutdisplay == true)
     {
-        <div style="background-color:white;border:solid black 3px;" class="checkout">
+        <div style="background-color:white;" class="checkout">
             @foreach (var item in cart_Items)
             {
                 <div class="cart-items-container">
@@ -75,17 +75,16 @@ else
                 </div>
                 <button type="submit" class="btn btn-primary">Complete Transaction</button>
             </EditForm>
-       
-            @if (paymentsuccess == 1)
-            {
-                <h1>Payment Successful!</h1>
-                <btn @onclick="@(() =>NavigateToShop())">Return to Shop?</btn>
-            }
-            @if (paymentsuccess == 2)
-            {
-                <p>Card Details incorrect! Please enter the correct details.</p>
-            }
         </div>
+        @if (paymentsuccess == 1)
+        {
+            <h1>Payment Successful!</h1>
+            <btn @onclick="@(() =>NavigateToShop())">Return to Shop?</btn>
+        }
+        if (paymentsuccess == 2)
+        {
+            <p>Card Details incorrect! Please enter the correct details.</p>
+        }
     }
 }
 
@@ -110,7 +109,7 @@ else
     }
     public void CheckoutSubmit()
     {
-        if (checkout.CardNumb.Length >= 16 && checkout.CVC.Length == 3 && checkout.Name != null && checkout.Name != "")
+        if (checkout.CardNumb.Length < 16 && checkout.CVC.Length != 3 && checkout.Name == null)
         {
             paymentsuccess = 1;
         } else
