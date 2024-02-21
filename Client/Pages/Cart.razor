@@ -75,7 +75,7 @@ else
                 </div>
                 <button type="submit" class="btn btn-primary">Complete Transaction</button>
             </EditForm>
-       
+
             @if (paymentsuccess == 1)
             {
                 <h1>Payment Successful!</h1>
@@ -113,11 +113,12 @@ else
         if (checkout.CardNumb.Length >= 16 && checkout.CVC.Length == 3 && checkout.Name != null && checkout.Name != "")
         {
             paymentsuccess = 1;
-        } else
+        }
+        else
         {
             paymentsuccess = 2;
         }
-        
+
     }
     public void NavigateToShop()
     {

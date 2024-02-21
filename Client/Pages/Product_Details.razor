@@ -29,7 +29,7 @@
                 @if (!string.IsNullOrEmpty(product.ColorOfPreview))
                 {
                     <p>Item Size:</p>
-                    <select bind ="@SelectedColor"attributes style="padding: 3px; padding-bottom: 5px;border-width: 2px; border-color: black; border-radius: 4px; margin-bottom:3px;">
+                    <select bind="@SelectedColor" attributes style="padding: 3px; padding-bottom: 5px;border-width: 2px; border-color: black; border-radius: 4px; margin-bottom:3px;">
                         @foreach (var coloroptions in Stack_Colors)
                         {
                             <option>
