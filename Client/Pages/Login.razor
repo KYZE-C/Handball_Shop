@@ -48,27 +48,29 @@
     public async void OnLogin()
     {
         bool emailformat = false;
-        for (int i = 0; i < user.Email.Length; i++)
+        if (user.Email != null)
         {
-            if (user.Email.Contains("@") == true)
+            for (int i = 0; i < user.Email.Length; i++)
             {
-                emailformat = true;
+                if (user.Email.Contains("@") == true)
+                {
+                    emailformat = true;
+                }
             }
-        }
-        if (user.Password.Length >= 6 && user.Password.Length <=20 && emailformat == true)
-        {
-            await LocalStorage.SetItemAsStringAsync("username", user.UserName);
-            await _AuthenticationStateProvider.GetAuthenticationStateAsync();
-            NavigationManager.NavigateTo("");
-        }
-        else if (emailformat == false)
-        {
-            validationcheck = 2;
-        }
-        else
-        {
-            validationcheck = 1;
-        }
-        
+            if (user.Password.Length >= 6 && user.Password.Length <= 20 && emailformat == true)
+            {
+                await LocalStorage.SetItemAsStringAsync("username", user.UserName);
+                await _AuthenticationStateProvider.GetAuthenticationStateAsync();
+                NavigationManager.NavigateTo("");
+            }
+            else if (emailformat == false)
+            {
+                validationcheck = 2;
+            }
+            else
+            {
+                validationcheck = 1;
+            }
+        }  
 	}
 }

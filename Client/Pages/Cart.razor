@@ -73,13 +73,13 @@ else
                     <label class="form-label" for="cvc">CVC</label>
                     <InputText id="cvc" style="width:50px" placeholder="123" @bind-Value="checkout.CVC"></InputText>
                 </div>
-                <button type="submit" class="btn btn-primary">Complete Transaction</button>
+                <button typeof="submit" class="btn btn-primary">Complete Transaction</button>
             </EditForm>
 
             @if (paymentsuccess == 1)
             {
                 <h1>Payment Successful!</h1>
-                <btn @onclick="@(() =>NavigateToShop())">Return to Shop?</btn>
+                <button onclick="@(() =>NavigateToShop())">Return to Shop?</button>
             }
             @if (paymentsuccess == 2)
             {
@@ -110,7 +110,11 @@ else
     }
     public void CheckoutSubmit()
     {
-        if (checkout.CardNumb.Length >= 16 && checkout.CVC.Length == 3 && checkout.Name != null && checkout.Name != "")
+        if (checkout.CardNumb == null || checkout.CVC == null)
+        {
+            paymentsuccess = 2;
+        }
+        else if (checkout.CardNumb.Length >= 16 && checkout.CVC.Length == 3 && checkout.Name != null && checkout.Name != "")
         {
             paymentsuccess = 1;
         }
@@ -118,7 +122,6 @@ else
         {
             paymentsuccess = 2;
         }
-
     }
     public void NavigateToShop()
     {
