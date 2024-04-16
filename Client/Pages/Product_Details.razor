@@ -1,12 +1,15 @@
-﻿@page "/product/{Id:int}"
+﻿@page "/product/{Id:int}"  
 @inject ICart_Service Cart_Service
 @inject IProducts_Service Product_Service
 @inject ILocalStorageService LocalStorage
 @inject IToastService ToastService
+
 @try
 {
+    @* Check if product data is successfully fetched *@
     @if (product != null)
     {
+        @* Layout for product details including image and information *@
         <div class="media" style="display: flex; align-items: flex-start;background-color:white;">
             <div class="media-img-details" style="border-right: 3px solid lightgray; padding-right: 20px;">
                 <img class="media-img-big" src="@product.Image" alt="@product.Title" />
@@ -15,6 +18,8 @@
             <div class="media-body" style="margin-left:15px;">
                 <h2 class="mb-0">@product.Title</h2>
                 <p>@product.Description</p>
+
+                @* Dropdown for selecting product variants if available *@
                 @if (product.Variants != null && product.Variants.Count > 1)
                 {
                     <select @bind="CurrentAdditonId" style="padding:3px;padding-bottom:5px;inline-size:55px;text-align:center;border-width:2px; border-color:black;border-radius:4px;margin-bottom:3px;margin-right:5px;">
@@ -26,10 +31,12 @@
                         }
                     </select>
                 }
+
+                @* Color selection dropdown if product has color options *@
                 @if (!string.IsNullOrEmpty(product.ColorOfPreview))
                 {
                     <p>Item Size:</p>
-                    <select bind="@SelectedColor" attributes style="padding: 3px; padding-bottom: 5px;border-width: 2px; border-color: black; border-radius: 4px; margin-bottom:3px;">
+                    <select bind="@SelectedColor" style="padding: 3px; padding-bottom: 5px;border-width: 2px; border-color: black; border-radius: 4px; margin-bottom:3px;">
                         @foreach (var coloroptions in Stack_Colors)
                         {
                             <option>
@@ -38,6 +45,8 @@
                         }
                     </select>
                 }
+
+                @* Display price, handling original and discounted prices *@
                 @if (GetSelectedVariant() != null)
                 {
                     @if (product.Variants[0].OriginalPrice != GetSelectedVariant().Price)
@@ -54,33 +63,37 @@
                     }
                 }
 
+                @* Button for adding the product to cart *@
                 <button class="btn btn-primary" style="margin-bottom:10px;" @onclick="AddToCart"><i class="fas fa-cart-plus"></i>&nbsp;&nbsp;&nbsp;Add to Cart</button>
             </div>
         </div>
     }
     else
     {
+        @* Message when no product is found with the given Id *@
         <h1> Product Not Found, Please enter a correct product Id</h1>
     }
 }
 catch
 {
+    @* Log error if there's an issue in processing the product details *@
     Console.WriteLine("Error kaput!");
 }
 
 
 @code {
-    private Product? product = new Product();
+    private Product? product = new Product();  // Variable to store product details
 
-    public string SelectedColor;
+    public string SelectedColor;  // Variable to store selected color from dropdown
 
-    private int CurrentAdditonId = 1;
+    private int CurrentAdditonId = 1;  // Store selected addition ID for variants
 
     [Parameter]
-    public int? Id { get; set; }
+    public int? Id { get; set; }  // Parameter received from the route
 
     protected override async Task OnInitializedAsync()
     {
+        @* Fetch product details based on the Id parameter *@
         product = await Product_Service.LoadSingleProduct(Id);
         if (product.Variants.Count > 0)
         {
@@ -88,14 +101,16 @@ catch
         }
     }
 
+    @* Method to fetch the selected variant based on addition ID *@
     public Variants_Product GetSelectedVariant()
     {
         var variant = product.Variants.FirstOrDefault(v => v.AdditionId == CurrentAdditonId);
         return variant;
     }
 
-    public Stack<string> Stack_Colors = new Stack<string>(new[] { "yellow", "red", "blue", "green", "orange", "purple", "pink", "brown", "white", "black", "gray" });
+    public Stack<string> Stack_Colors = new Stack<string>(new[] { "yellow", "red", "blue", "green", "orange", "purple", "pink", "brown", "white", "black", "gray" });  // Stack to store available colors
 
+    @* Method to add the selected product variant to the cart *@
     private async Task AddToCart()
     {
         await Cart_Service.AddToCart(GetSelectedVariant());

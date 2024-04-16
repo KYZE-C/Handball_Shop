@@ -16,25 +16,34 @@ else
     <ListProducts />
 }
 
-@code
-{
-    private Category? category_variable = null;
+@code {
+    private Category? category_variable = null;  // Variable to store the category details
 
     [Parameter]
-    public string? CategoryURL { get; set; }
+    public string? CategoryURL { get; set; }  // Parameter that receives the category URL from the parent component or router
 
+    @* Method that's triggered after parameters are received and set. This method is asynchronous so it doesnt run until called. *@
     protected override async Task OnParametersSetAsync()
     {
+        @* Load products based on the category URL provided. *@
         await Products_Service.LoadProducts(CategoryURL);
+
+        @* Check if the CategoryURL parameter is not null and fetch the corresponding category. *@
         if (CategoryURL != null)
         {
+            @* Retrieve the category details from the service by matching the URL, using case-insensitive comparison. *@
             category_variable = Category_Service.Categories.FirstOrDefault(c => c.Url.ToUpper().Equals(CategoryURL.ToUpper()));
         }
         else
         {
+            @* If no CategoryURL is provided, set the category variable to null. *@
             category_variable = null;
         }
+
+        @* Increment visit count for the category page using Stats_Service. *@
         await Stats_Service.IncrementVisits();
+
+        @* Optionally retrieve the visit count, if needed elsewhere in the component (not stored here). *@
         await Stats_Service.GetVisits();
     }
 }

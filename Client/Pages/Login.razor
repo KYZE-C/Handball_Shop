@@ -1,12 +1,15 @@
-﻿@page "/login"
+﻿@page "/login" 
 @inject ILocalStorageService LocalStorage
-@inject NavigationManager NavigationManager
-@inject AuthenticationStateProvider _AuthenticationStateProvider
+@inject NavigationManager NavigationManager  
+@inject AuthenticationStateProvider _AuthenticationStateProvider  
 
+// Container for the login form
 <div class="login-container">
     <div class="login-content">
+        @* Edit form for user login, binds to user model and triggers OnLogin on submit *@
         <EditForm Model="user" OnSubmit="OnLogin" class="login-details">
             <div class="form-field">
+                @* Input fields for user's first name, surname, and username *@
                 <div class="form-field">
                     <label class="form-label" for="firstname">FirstName</label>
                     <InputText id="firstname" @bind-Value="user.FirstName"></InputText>
@@ -18,59 +21,56 @@
                 <label class="form-label" for="username">Username</label>
                 <InputText id="username" @bind-Value="user.UserName"></InputText>
             </div>
+            @* Input field for password with type set to password to hide input *@
             <div class="form-field">
                 <label class="form-label" for="password">Password</label>
                 <InputText id="password" type="password" @bind-Value="user.Password"></InputText>
             </div>
+            @* Input field for email *@
             <div class="form-field">
                 <label class="form-label" for="email">Email</label>
                 <InputText id="email" @bind-Value="user.Email"></InputText>
             </div>
+            @* Login button to submit the form *@
             <button type="submit" class="btn btn-primary">Login</button>
+            @* Conditional rendering for displaying validation messages *@
             @if (validationcheck == 1)
             {
                 <p>Please enter a password with a length bigger than 6 characters whilst smaller than 20!</p>
             }
             else if (validationcheck == 2)
             {
-                <p>Please enter a valid email adress!</p>
+                <p>Please enter a valid email address!</p>
             }
         </EditForm>
     </div>
 </div>
 
-
 @code {
-
-    private User user = new User();
-    public int validationcheck = 0;
+    private User user = new User();  // User model instance to hold login input data
+    public int validationcheck = 0;  // Tracks validation state of the form
 
     public async void OnLogin()
     {
-        bool emailformat = false;
+        bool emailformat = false;  // Flag to check if email contains '@'
         if (user.Email != null)
         {
-            for (int i = 0; i < user.Email.Length; i++)
-            {
-                if (user.Email.Contains("@") == true)
-                {
-                    emailformat = true;
-                }
-            }
+            emailformat = user.Email.Contains("@");  // Check if email includes '@'
             if (user.Password.Length >= 6 && user.Password.Length <= 20 && emailformat == true)
             {
+                @* Save username in local storage, update authentication state, and navigate to home *@
                 await LocalStorage.SetItemAsStringAsync("username", user.UserName);
                 await _AuthenticationStateProvider.GetAuthenticationStateAsync();
                 NavigationManager.NavigateTo("");
             }
-            else if (emailformat == false)
+            else if (!emailformat)
             {
-                validationcheck = 2;
+                validationcheck = 2;  // Set validation check for invalid email
             }
             else
             {
-                validationcheck = 1;
+                validationcheck = 1;  // Set validation check for password length issue
             }
-        }  
-	}
+        }
+    }
 }

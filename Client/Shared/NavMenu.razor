@@ -1,23 +1,32 @@
-﻿@inject ICategory_Service Category_Service
+﻿@* // Dependency injections for accessing various services within the component *@
+@inject ICategory_Service Category_Service
 @inject ILocalStorageService LocalStorage
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IProducts_Service Product_Service
 
+@* // Main header with shop title and styled icon *@
 <h2 class="handball">
 	Handball <span class="shop">Shop</span><i style="font-size: 1.3rem; vertical-align: middle;" class="fas fa-futbol" />
 </h2>
+
+@* // Navigation link to the Home page with an icon *@
 <div class="nav-item">
 	<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
 		<span class="oi oi-home" aria-hidden="true"></span>Home
 	</NavLink>
 </div>
+
+@* // Navigation link to the Shop page with a cart icon and title *@
 <div class="nav-item">
 	<NavLink class="nav-link" href="/Shop" Match="NavLinkMatch.All">
 		<span class="fas fa-cart-shopping" aria-hidden="true"></span> <div style="text-align:center;margin-bottom:0px;">Store & Shop</div>
 	</NavLink>
 </div>
-<SearchBox products="productslist" OnSearch="SearchProducts"/>
 
+@* search box component for finding products*@
+<SearchBox products="productslist" OnSearch="SearchProducts" />
+
+@* // Conditional rendering of category links if categories are available *@
 @if (Category_Service != null && Category_Service.Categories != null)
 {
 	@foreach (Category category in Category_Service.Categories)
@@ -34,16 +43,18 @@ else
 	Console.WriteLine("Categories are null");
 }
 
-
+/@* / Authorization views showing different nav items based on user login state *@
 <AuthorizeView>
-	<NotAuthorized>@* View when the user is not authorized/logged in *@
+	<NotAuthorized>
+		@* // Shown when the user is not authorized or logged in *@
 		<li class="nav-item" style="list-style-type:none;">
 			<NavLink class="nav-link" href="login">
 				<i class="nav-login"><span class="oi oi-account-login" aria-hidden="true"></span> </i><p style="text-align:center;margin-bottom:0px;">Sign In</p>
 			</NavLink>
 		</li>
 	</NotAuthorized>
-	<Authorized>@* View when user is logged in *@
+	<Authorized>
+		@* // Shown when user is logged in *@
 		<li class="nav-item" style="list-style-type:none;">
 			<a class="nav-link" href="login" @onclick="SignOut">
 				<i class="nav-login"><span class="oi oi-account-logout" aria-hidden="true"></span> </i><p style="text-align:center;margin-bottom:0px;">Sign out</p>
@@ -52,48 +63,52 @@ else
 	</Authorized>
 </AuthorizeView>
 
+@* // Top navigation bar including the shopping cart *@
 <div class="nav-item">
-	<TopBar/> @* The shopping cart positioned on the top navigation bar *@
+	<TopBar /> @* // The shopping cart positioned on the top navigation bar *@
 </div>
 
 @code {
-	List<Product>? productslist;
+	List<Product>? productslist;  // List to hold filtered or all products
 
-	private bool collapseNavMenu = true;
+	private bool collapseNavMenu = true;  // State for collapsing the navigation menu
 
-	private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+	private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;  // CSS class for the nav menu based on its state
 
+	// Toggles the state of the navigation menu
 	private void ToggleNavMenu()
 	{
 		collapseNavMenu = !collapseNavMenu;
 	}
 
+	// Lifecycle method to load categories when the component is initialized
 	protected override async Task OnInitializedAsync()
 	{
-
 		await Category_Service.LoadCategories();
 	}
 
+	// Method to handle user sign-out
 	private async void SignOut()
 	{
 		await LocalStorage.RemoveItemAsync("username");
 		await AuthStateProvider.GetAuthenticationStateAsync();
 	}
 
+	// Searches and filters products based on user input
 	public void SearchProducts(string searchitem)
 	{
-		productslist = Product_Service.Products;
+		productslist = Product_Service.Products;  // Assign initial list from service
 
-		if (searchitem != null && searchitem !="")
+		if (!string.IsNullOrEmpty(searchitem))  // Filter list if search term is not empty
 		{
-			productslist = productslist.Where(p => p.Title.Contains(searchitem, StringComparison.OrdinalIgnoreCase)).ToList(); //searches for products by its title
+			productslist = productslist.Where(p => p.Title.Contains(searchitem, StringComparison.OrdinalIgnoreCase)).ToList();
 		}
 		else
 		{
-			productslist = null;
+			productslist = null;  // Reset list if search is empty
 		}
-		Product_Service.UpdateSearchedProducts(productslist);
+		Product_Service.UpdateSearchedProducts(productslist);  // Update the service with new list
 
-		StateHasChanged();
+		StateHasChanged();  // Trigger UI update
 	}
 }

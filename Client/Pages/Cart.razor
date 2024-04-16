@@ -1,33 +1,39 @@
-﻿@page "/cart"
-@inject ICart_Service Cart_Service
-@inject NavigationManager NavigationManager
+﻿@page "/cart"  // Define route for the shopping cart page
+@inject ICart_Service Cart_Service  // Inject cart service for cart operations
+@inject NavigationManager NavigationManager  // Inject NavigationManager to manage routing
 
+@* // Heading for the Shopping Cart page *@
 <h1 style="margin-bottom:25px;"> Shopping Cart </h1>
 
+@* // Conditional rendering based on cart items availability *@
 @if (cart_Items == null || cart_Items.Count <= 0)
 {
+    @* Display message when cart is empty *@
     <span>You have no items in your cart!</span>
 }
 else
 {
+    @* Iterate over each item in the cart and display it *@
     foreach (var item in cart_Items)
     {
         <div class="cart-items-container">
             <img src="@item.Product_Image">
             <ul>
+                @* Link to product detail page *@
                 <li>
                     <a style="text-decoration:none;" href="/product/@item.ProductId">
                         <h3>@item.Product_Title</h3>
                     </a>
                 </li>
-
+                @* Display product size or variant *@
                 <li class="cart-variant">
                     <h5>Item size : @item.Addition_Name</h5>
                 </li>
-
+                @* Display product price *@
                 <li>
                     <h5 class="cart-item-price">Item Price : £@item.Price</h5>
                 </li>
+                @* Button to remove item from cart *@
                 <li>
                     <button @onclick="@(() => DeleteItem(item))" class="delete-button">
                         <i class="fas fa-ban"></i>
@@ -37,14 +43,18 @@ else
             </ul>
         </div>
     }
+    @* Display number of items and total price in cart *@
     <p class="cart-count">Items in cart (@cart_Items.Count)</p>
     <p class="cart-totalprice">Total price : (£@cart_Items.Sum(v => v.Price))</p>
+    @* Button to proceed to checkout *@
     <button type="button" @onclick="@(() => Checkout_toggle())">Procceed to Checkout</button>
+    @* Checkout section displayed upon button click *@
     @if (checkoutdisplay == true)
     {
         <div style="background-color:white;border:solid black 3px;" class="checkout">
             @foreach (var item in cart_Items)
             {
+                @* Display smaller images of cart items in checkout *@
                 <div class="cart-items-container">
                     <img style="width:50px;height:50px;" src="@item.Product_Image">
                     <ul>
@@ -54,10 +64,13 @@ else
                     </ul>
                 </div>
             }
+            @* Display total price in checkout view *@
             <p class="cart-totalprice">Total price : (£@cart_Items.Sum(v => v.Price))</p>
             <hr>
+            @* Form for entering payment details *@
             <EditForm Model="checkout" OnSubmit="@(() => CheckoutSubmit())" class="login-details">
                 <div class="form-field">
+                    @* Fields for name and card number *@
                     <div class="form-field">
                         <label style="width:300px" class="form-label" for="Name">FirstName</label>
                         <InputText id="Name" @bind-Value="checkout.Name"></InputText>
@@ -65,6 +78,7 @@ else
                     <label class="form-label" for="cardnumb">Card Number</label>
                     <InputText id="cardnumb" placeholder="1234 5678 9876 5432" @bind-Value="checkout.CardNumb"></InputText>
                 </div>
+                @* Fields for expiration date and CVC *@
                 <div class="form-field">
                     <label class="form-label" for="expdate">Valid until</label>
                     <InputText id="expdate" placeholder="MM/YY" style="width:100px;" @bind-Value="checkout.ExpDate"></InputText>
@@ -73,9 +87,10 @@ else
                     <label class="form-label" for="cvc">CVC</label>
                     <InputText id="cvc" style="width:50px" placeholder="123" @bind-Value="checkout.CVC"></InputText>
                 </div>
+                @* Submit button for the form *@
                 <button typeof="submit" class="btn btn-primary">Complete Transaction</button>
             </EditForm>
-
+            @* Conditional rendering based on payment success or failure *@
             @if (paymentsuccess == 1)
             {
                 <h1>Payment Successful!</h1>
@@ -90,39 +105,44 @@ else
 }
 
 @code {
-    private int paymentsuccess = 0;
-    private Checkout checkout = new Checkout();
-    public bool checkoutdisplay = false;
-    private List<Cart_Item> cart_Items = new List<Cart_Item>();
+    private int paymentsuccess = 0;  // Tracks payment success state
+    private Checkout checkout = new Checkout();  // Checkout model instance
+    public bool checkoutdisplay = false;  // Controls visibility of the checkout form
+    private List<Cart_Item> cart_Items = new List<Cart_Item>();  // List to hold cart items
 
+    // Loads cart items on initialization
     protected override async Task OnInitializedAsync()
     {
         cart_Items = await Cart_Service.GetCart_Items();
     }
+    // Removes an item from the cart and refreshes the list
     private async Task DeleteItem(Cart_Item Item)
     {
         await Cart_Service.DeleteItem(Item);
         cart_Items = await Cart_Service.GetCart_Items();
     }
+    // Toggles checkout display
     public void Checkout_toggle()
     {
         checkoutdisplay = true;
     }
+    // Submits checkout details and validates payment
     public void CheckoutSubmit()
     {
         if (checkout.CardNumb == null || checkout.CVC == null)
         {
-            paymentsuccess = 2;
+            paymentsuccess = 2;  // Set failure on invalid input
         }
         else if (checkout.CardNumb.Length >= 16 && checkout.CVC.Length == 3 && checkout.Name != null && checkout.Name != "")
         {
-            paymentsuccess = 1;
+            paymentsuccess = 1;  // Set success on valid input
         }
         else
         {
-            paymentsuccess = 2;
+            paymentsuccess = 2;  // Set failure on incomplete input
         }
     }
+    // Navigate back to shop after successful payment
     public void NavigateToShop()
     {
         cart_Items.Clear();
