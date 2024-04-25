@@ -1,6 +1,7 @@
 ﻿@inject IProducts_Service Product_Service
 @implements IDisposable
 
+@* This section checks if there are filtered products to display *@
 @if (Product_Service.FilteredProducts != null && Product_Service.FilteredProducts.Count > 0)
 {
     <h3>Products related to your search</h3>
@@ -16,18 +17,18 @@
                 <hr class="divider2" style="height: 3px; background-color: black; color: black; margin: 0; width: calc(100% + 20px); margin-left: -10px; margin-top:10px;" />
                 <div class="media-body" style=" padding: 10px; color: black;">
                     <a href="/product/@searchedproduct.Id" style="text-decoration:none;">
-                        <h2 class="product-title" style="font-size:@TitleSize(searchedproduct)">@searchedproduct.Title</h2>
+                        <h2 class="product-title" style="font-size:@TitleSize(searchedproduct)">@searchedproduct.Title</h2> @* This displays the title of each product *@
                     </a>
                     <p>Product Description: @searchedproduct.Description</p>
-                    <p style="color:green;">@GetPriceTxt(searchedproduct)</p>
+                    <p style="color:green;">@GetPriceTxt(searchedproduct)</p> @* This displays the price of each product *@
 
-                    @if (searchedproduct.ColorOfPreview != null)
+                    @if (searchedproduct.ColorOfPreview != null) @* Checks if the product has a colour variant *@
                     {
-                        <p>Color of item above : @searchedproduct.ColorOfPreview</p>
+                        <p>Colour of item above : @searchedproduct.ColorOfPreview</p> @* This displays the colour of each product *@
                     }
                     @if (searchedproduct.SizeOfPreview != null)
                     {
-                        <p>Size of item above : @searchedproduct.SizeOfPreview</p>
+                        <p>Size of item above : @searchedproduct.SizeOfPreview</p> @* This displays the size of each product *@
                     }
                 </div>
             </li>
@@ -35,6 +36,9 @@
     </ul>
     <br>
 }
+@* End of filtered products section *@
+
+@* This section displays products available for purchase *@
 <h3>Products available for purchase</h3>
 <ul class="list-unsorted" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; margin: 0;">
     @foreach (var product in Product_Service.Products)
@@ -49,27 +53,29 @@
             <hr class="divider2" style="height: 3px; background-color: black; color: black; margin: 0; width: calc(100% + 20px); margin-left: -10px; margin-top:10px;" />
             <div class="media-body" style=" padding: 10px; color: black;">
                 <a href="/product/@product.Id" style="text-decoration:none;">
-                    <h2 class="product-title" style="font-size:@TitleSize(product)">@product.Title</h2>
+                    <h2 class="product-title" style="font-size:@TitleSize(product)">@product.Title</h2> @* This displays the title of each product *@
                 </a>
                 <p>Product Description: @product.Description</p>
-                <p style="color:green;">@GetPriceTxt(product)</p>
+                <p style="color:green;">@GetPriceTxt(product)</p> @* This displays the price of each product *@
 
-                @if (product.ColorOfPreview != null)
+                @if (product.ColorOfPreview != null) @*Checks if the product has a colour variant *@
                 {
-                    <p>Color of item above : @product.ColorOfPreview</p>
+                    <p>Color of item above : @product.ColorOfPreview</p> @* This displays the colour of each product *@
                 }
                 @if (product.SizeOfPreview != null)
                 {
-                    <p>Size of item above : @product.SizeOfPreview</p>
+                    <p>Size of item above : @product.SizeOfPreview</p> @* This displays the size of each product *@
                 }
             </div>
         </li>
     }
 
 </ul>
+@* End of products available for purchase section *@
 
 @code
 {
+    // Method to determine the font size based on the length of the product title
     public string TitleSize(Product product)
     {
         if (product.Title.Length <= 20)
@@ -88,9 +94,9 @@
         {
             return "0.8rem";
         }
-
     }
 
+    // Method to handle the disposal of resources when the component is disposed
     protected override void OnInitialized()
     {
         Product_Service.OnChange += StateHasChanged;
@@ -99,6 +105,8 @@
     {
         Product_Service.OnChange -= StateHasChanged;
     }
+
+    // Method to generate text indicating the price of a product
     public string GetPriceTxt(Product product)
     {
         var variants = product.Variants;
@@ -111,7 +119,6 @@
             if (variants[0].OriginalPrice == null)
             {
                 return $"Price : £{variants[0].Price}";
-
             }
             else
             {

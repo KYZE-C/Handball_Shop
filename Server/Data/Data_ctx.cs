@@ -148,14 +148,14 @@ namespace Handball_Shopv1.Server.Data
 
             modelBuilder.Entity<Variants_Product>().HasData(
 
-                new Variants_Product
+                new Variants_Product //Product Title: Resin == Product ID: 1
                 {
                     AdditionId = 9,
                     ProductId = 1,
                     OriginalPrice = originalprices[0],
                     Price = originalprices[0],
                 },
-                new Variants_Product
+                new Variants_Product //Product Title: Handball Ball == Product ID:2
                 {
                     AdditionId = 6,
                     ProductId = 2,
